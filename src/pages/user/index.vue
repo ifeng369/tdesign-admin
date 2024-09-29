@@ -1,5 +1,5 @@
 <template>
-  <t-row :gutter="[24, 24]">
+  <t-row :gutter="[12, 12]">
     <t-col :flex="3">
       <div class="user-left-greeting">
         <div>
