@@ -14,12 +14,12 @@ export default ({ mode }: ConfigEnv): UserConfig =>{
     base: VITE_BASE_URL,
 
     plugins: [
-      // ...
       vue(),
       AutoImport({
-        resolvers: [TDesignResolver({
-          library: 'vue-next'
-        })],
+        imports: ['vue', 'vue-router','pinia'],
+        // resolvers: [TDesignResolver({
+        //   library: 'vue-next'
+        // })],
       }),
       Components({
         resolvers: [TDesignResolver({
