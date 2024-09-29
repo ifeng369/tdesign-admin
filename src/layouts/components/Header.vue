@@ -23,7 +23,7 @@
           <!-- 全局通知 -->
           <notice />
 
-          <t-tooltip placement="bottom" content="代码仓库">
+          <!-- <t-tooltip placement="bottom" content="代码仓库">
             <t-button theme="default" shape="square" variant="text" @click="navToGitHub">
               <t-icon name="logo-github" />
             </t-button>
@@ -32,21 +32,23 @@
             <t-button theme="default" shape="square" variant="text" @click="navToHelper">
               <t-icon name="help-circle" />
             </t-button>
-          </t-tooltip>
+          </t-tooltip> -->
           <t-dropdown :min-column-width="120" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
                 <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')">
-                  <user-circle-icon />个人中心
+                  <t-icon class="header-user-avatar" name="user-setting" />
+                  个人中心
                 </t-dropdown-item>
                 <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout">
-                  <poweroff-icon />退出登录
+                  <t-icon class="header-user-avatar" name="poweroff" />
+                  退出登录
                 </t-dropdown-item>
               </t-dropdown-menu>
             </template>
             <t-button class="header-user-btn" theme="default" variant="text">
               <template #icon>
-                <t-icon class="header-user-avatar" name="user-circle" />
+                <t-icon class="header-user-avatar" name="user" />
               </template>
               <div class="header-user-account">{{ user.userInfo.name }}</div>
               <template #suffix><chevron-down-icon /></template>

@@ -196,7 +196,8 @@ const handleCloseDrawer = () => {
 };
 
 const getThumbnailUrl = (name: string): string => {
-  return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
+  // return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
+  return `/images/${name}.png`;
 };
 
 watchEffect(() => {

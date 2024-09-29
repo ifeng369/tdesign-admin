@@ -1,4 +1,4 @@
-import { DashboardIcon, LogoutIcon, CheckCircleIcon, UserCircleIcon, ViewListIcon, Edit1Icon, LayersIcon, InternetIcon } from 'tdesign-icons-vue-next';
+import { DashboardIcon, LogoutIcon, CheckCircleIcon, UserCircleIcon, ViewListIcon, Edit1Icon, LayersIcon, InternetIcon, UserSettingIcon } from 'tdesign-icons-vue-next';
 import { RouteRecordRaw } from 'vue-router';
 import { shallowRef } from 'vue';
 
@@ -283,7 +283,7 @@ const menuList: Array<RouteRecordRaw> = [
     name: 'user',
     component: Layout,
     redirect: '/user/index',
-    meta: { title: '个人页', icon: shallowRef(UserCircleIcon) },
+    meta: { title: '个人页', icon: shallowRef(UserSettingIcon) },
     children: [
       {
         path: 'index',

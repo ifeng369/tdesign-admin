@@ -22,7 +22,8 @@
         </t-list>
 
         <div v-else class="empty-list">
-          <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" />
+          <!-- <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" /> -->
+          <nothing style="height: 60px;"/>
           <p>暂无通知</p>
         </div>
         <div v-if="unreadMsg.length > 0" class="header-msg-bottom">
@@ -46,6 +47,7 @@ import { useRouter } from 'vue-router';
 
 import { useNotificationStore } from '@/store';
 import type { NotificationItem } from '@/types/interface';
+import nothing from '@/assets/assets-nothing.svg?component';
 
 const router = useRouter();
 const store = useNotificationStore();

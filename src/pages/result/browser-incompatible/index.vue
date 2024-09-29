@@ -2,19 +2,6 @@
   <result title="浏览器不兼容" type="ie" tip="抱歉，您正在使用的浏览器版本过低，无法打开当前网页。">
     <div class="result-slot-container">
       <t-button class="result-button" @click="() => $router.push('/')">返回首页</t-button>
-      <div class="recommend-container">
-        <div>TDesign Starter 推荐以下主流浏览器</div>
-        <div class="recommend-browser">
-          <div>
-            <thumbnail class="browser-icon" url="https://tdesign.gtimg.com/starter/result-page/chorme.png" />
-            <div>Chrome</div>
-          </div>
-          <div>
-            <thumbnail class="browser-icon" url="https://tdesign.gtimg.com/starter/result-page/qq-browser.png" />
-            <div>QQ Browser</div>
-          </div>
-        </div>
-      </div>
     </div>
   </result>
 </template>
@@ -25,10 +12,9 @@ export default {
 </script>
 <script setup lang="ts">
 import Result from '@/components/result/index.vue';
-import Thumbnail from '@/components/thumbnail/index.vue';
 </script>
 
-<style lang="less" scoped>
+<!-- <style lang="less" scoped>
 .result-slot-container {
   position: relative;
   display: flex;
@@ -71,4 +57,4 @@ import Thumbnail from '@/components/thumbnail/index.vue';
   height: var(--td-comp-size-xl);
   margin-bottom: var(--td-comp-margin-s);
 }
-</style>
+</style> -->
