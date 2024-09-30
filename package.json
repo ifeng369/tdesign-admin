@@ -4,6 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite --open --mode development",
+		"dev:github": "vite --open --mode github",
 		"build": "vue-tsc --noEmit && vite build --mode release",
 		"build:github": "vue-tsc --noEmit && vite build --mode github",
 		"preview": "vite preview",

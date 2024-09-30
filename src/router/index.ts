@@ -58,6 +58,7 @@ export const getActive = (maxLevel = 3): string => {
     .map((item: string) => `/${item}`)
     .join("");
 };
+console.log(env,env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL)
 
 const router = createRouter({
   history: createWebHistory(
