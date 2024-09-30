@@ -98,9 +98,9 @@ import STYLE_CONFIG from "@/config/style";
 import { useSettingStore } from "@/store";
 
 
-import sidePng from "@/assets/side.png";
-import topPng from "@/assets/top.png";
-import mixPng from "@/assets/mix.png";
+import sidePng from "@/assets/side.png?url";
+import topPng from "@/assets/top.png?url";
+import mixPng from "@/assets/mix.png?url";
 
 
 const settingStore = useSettingStore();
