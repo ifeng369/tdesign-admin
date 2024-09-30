@@ -1,5 +1,5 @@
 import uniq from "lodash/uniq";
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import menuList from "./menu";
 import login from "@/pages/login/index.vue";
@@ -61,7 +61,7 @@ export const getActive = (maxLevel = 3): string => {
 console.log(env,env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL)
 
 const router = createRouter({
-  history: createWebHistory(
+  history: env === "github"? createWebHashHistory() : createWebHistory(
     env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL,
   ),
   routes: allRoutes,
