@@ -47,6 +47,11 @@ export default ({ mode }: ConfigEnv): UserConfig =>{
         [VITE_API_URL_PREFIX]: VITE_API_URL,
       },
     },
+    build: {
+      // outDir: '../wwwroot',
+      sourcemap: true,
+      emptyOutDir: true
+    },
     resolve:{
       alias: {
         '@': resolve(__dirname, './src'),
