@@ -193,15 +193,7 @@ const handleCloseDrawer = () => {
 };
 
 const getThumbnailUrl = (name: string): string => {
-  // return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
-  // console.log((await import(`@/assets/${name}.png`)).default);
-  return `${import.meta.env.VITE_BASE_URL}/images/${name}.png`;
-  // if (name == "side")
-  //   return sidePng;
-  // if (name == "top")
-  //   return topPng;
-  // if (name == "mix")
-  //   return mixPng;
+  return `/images/${name}.png`;
 };
 
 watchEffect(() => {
