@@ -58,12 +58,9 @@ export const getActive = (maxLevel = 3): string => {
     .map((item: string) => `/${item}`)
     .join("");
 };
-console.log(env,env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL)
 
 const router = createRouter({
-  history: env === "github"? createWebHashHistory() : createWebHistory(
-    env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL,
-  ),
+  history: env === "github"? createWebHashHistory() : createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: allRoutes,
   scrollBehavior() {
     return {
