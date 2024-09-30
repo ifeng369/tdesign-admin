@@ -38,19 +38,9 @@
         </t-radio-group>
         <div class="setting-group-title">导航布局</div>
         <t-radio-group v-model="formData.layout">
-          <div class="setting-layout-drawer">
-            <t-radio-button :key="0" value="side">
-              <thumbnail src="/images/side.png" />
-            </t-radio-button>
-          </div>
-          <div class="setting-layout-drawer">
-            <t-radio-button :key="1" value="top">
-              <thumbnail src="/images/top.png" />
-            </t-radio-button>
-          </div>
-          <div class="setting-layout-drawer">
-            <t-radio-button :key="2" value="mix">
-              <thumbnail src="/images/mix.png" />
+          <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+            <t-radio-button :key="index" :value="item">
+              <thumbnail :src="getThumbnailUrl(item)" />
             </t-radio-button>
           </div>
         </t-radio-group>
@@ -115,7 +105,7 @@ import { useSettingStore } from "@/store";
 
 const settingStore = useSettingStore();
 
-// const LAYOUT_OPTION = ["side", "top", "mix"];
+const LAYOUT_OPTION = ["side", "top", "mix"];
 
 const MODE_OPTIONS = [
   { type: "light", text: "明亮" },
@@ -202,12 +192,13 @@ const handleCloseDrawer = () => {
   });
 };
 
-// const getThumbnailUrl = (name: string): string => {
-//   let bashPath = import.meta.env.VITE_BASE_URL;
-//   if(bashPath.endsWith("/")) bashPath+="images";
-//   else bashPath+="/images";
-//   return `${bashPath}/${name}.png`;
-// };
+const getThumbnailUrl = (name: string): string => {
+  let bashPath = import.meta.env.VITE_BASE_URL;
+  if(bashPath.startsWith(".")) bashPath=bashPath.substring(1)
+  if(bashPath.endsWith("/")) bashPath+="images";
+  else bashPath+="/images";
+  return `${bashPath}/${name}.png`;
+};
 
 watchEffect(() => {
   if (formData.value.brandTheme) settingStore.updateConfig(formData.value);
