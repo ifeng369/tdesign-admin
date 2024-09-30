@@ -98,9 +98,9 @@ import STYLE_CONFIG from "@/config/style";
 import { useSettingStore } from "@/store";
 
 
-import sidePng from "@/assets/side.png?url";
-import topPng from "@/assets/top.png?url";
-import mixPng from "@/assets/mix.png?url";
+// import sidePng from "@/assets/side.png?url";
+// import topPng from "@/assets/top.png?url";
+// import mixPng from "@/assets/mix.png?url";
 
 
 const settingStore = useSettingStore();
@@ -195,13 +195,13 @@ const handleCloseDrawer = () => {
 const getThumbnailUrl = (name: string): string => {
   // return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
   // console.log((await import(`@/assets/${name}.png`)).default);
-  // return import(`@/assets/${name}.png`);
-  if (name == "side")
-    return sidePng;
-  if (name == "top")
-    return topPng;
-  if (name == "mix")
-    return mixPng;
+  return `/${name}.png`;
+  // if (name == "side")
+  //   return sidePng;
+  // if (name == "top")
+  //   return topPng;
+  // if (name == "mix")
+  //   return mixPng;
 };
 
 watchEffect(() => {
