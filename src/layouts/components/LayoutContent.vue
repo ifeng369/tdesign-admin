@@ -28,7 +28,7 @@
                 visible: boolean,
                 ctx: PopupVisibleChangeContext,
               ) => handleTabMenuClick(visible, ctx, routeItem.path),
-              visible: activeTabPath === routeItem.path,
+              // visible: activeTabPath === routeItem.path,
             }"
           >
             <template v-if="!routeItem.isHome">
