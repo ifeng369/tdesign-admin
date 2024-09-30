@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite --open --mode development",
 		"build": "vue-tsc --noEmit && vite build --mode release",
+		"build:github": "vue-tsc --noEmit && vite build --mode github",
 		"preview": "vite preview",
 		"format": "prettier --write ."
 	},
