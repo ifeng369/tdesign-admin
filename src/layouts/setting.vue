@@ -1,26 +1,15 @@
 <template>
-  <t-drawer
-    v-model:visible="showSettingPanel"
-    size="408px"
-    :footer="false"
-    header="页面配置"
-    :close-btn="true"
-    class="setting-drawer-container"
-    @close-btn-click="handleCloseDrawer"
-  >
+  <t-drawer v-model:visible="showSettingPanel" size="408px" :footer="false" header="页面配置" :close-btn="true"
+    class="setting-drawer-container" @close-btn-click="handleCloseDrawer">
     <div class="setting-container">
       <t-form ref="form" :data="formData" label-align="left">
         <div class="setting-group-title">主题模式</div>
         <t-radio-group v-model="formData.mode">
-          <div
-            v-for="(item, index) in MODE_OPTIONS"
-            :key="index"
-            class="setting-layout-drawer"
-          >
+          <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
             <div>
-              <t-radio-button :key="index" :value="item.type"
-                ><component :is="getModeIcon(item.type)"
-              /></t-radio-button>
+              <t-radio-button :key="index" :value="item.type">
+                <component :is="getModeIcon(item.type)" />
+              </t-radio-button>
               <p :style="{ textAlign: 'center', marginTop: '8px' }">
                 {{ item.text }}
               </p>
@@ -29,41 +18,19 @@
         </t-radio-group>
         <div class="setting-group-title">主题色</div>
         <t-radio-group v-model="formData.brandTheme">
-          <div
-            v-for="(item, index) in DEFAULT_COLOR_OPTIONS"
-            :key="index"
-            class="setting-layout-drawer"
-          >
-            <t-radio-button
-              :key="index"
-              :value="item"
-              class="setting-layout-color-group"
-            >
+          <div v-for="(item, index) in DEFAULT_COLOR_OPTIONS" :key="index" class="setting-layout-drawer">
+            <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
               <color-container :value="item" />
             </t-radio-button>
           </div>
           <div class="setting-layout-drawer">
-            <t-popup
-              destroy-on-close
-              expand-animation
-              placement="bottom-right"
-              trigger="click"
-              :visible="isColoPickerDisplay"
-              :overlay-style="{ padding: 0 }"
-              @visible-change="onPopupVisibleChange"
-            >
+            <t-popup destroy-on-close expand-animation placement="bottom-right" trigger="click"
+              :visible="isColoPickerDisplay" :overlay-style="{ padding: 0 }" @visible-change="onPopupVisibleChange">
               <template #content>
-                <t-color-picker-panel
-                  :on-change="changeColor"
-                  :color-modes="['monochrome']"
-                  format="HEX"
-                  :swatch-colors="[]"
-                />
+                <t-color-picker-panel :on-change="changeColor" :color-modes="['monochrome']" format="HEX"
+                  :swatch-colors="[]" />
               </template>
-              <t-radio-button
-                :value="dynamicColor"
-                class="setting-layout-color-group dynamic-color-btn"
-              >
+              <t-radio-button :value="dynamicColor" class="setting-layout-color-group dynamic-color-btn">
                 <color-container :value="dynamicColor" />
               </t-radio-button>
             </t-popup>
@@ -71,28 +38,16 @@
         </t-radio-group>
         <div class="setting-group-title">导航布局</div>
         <t-radio-group v-model="formData.layout">
-          <div
-            v-for="(item, index) in LAYOUT_OPTION"
-            :key="index"
-            class="setting-layout-drawer"
-          >
+          <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
             <t-radio-button :key="index" :value="item">
               <thumbnail :src="getThumbnailUrl(item)" />
             </t-radio-button>
           </div>
         </t-radio-group>
-        <t-form-item
-          v-show="formData.layout === 'mix'"
-          label="分割菜单（混合模式下有效）"
-          name="splitMenu"
-        >
+        <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
           <t-switch v-model="formData.splitMenu" />
         </t-form-item>
-        <t-form-item
-          v-show="formData.layout === 'mix'"
-          label="固定 Sidebar"
-          name="isSidebarFixed"
-        >
+        <t-form-item v-show="formData.layout === 'mix'" label="固定 Sidebar" name="isSidebarFixed">
           <t-switch v-model="formData.isSidebarFixed" />
         </t-form-item>
         <div class="setting-group-title">元素开关</div>
@@ -141,6 +96,12 @@ import Thumbnail from "@/components/thumbnail/index.vue";
 import { DEFAULT_COLOR_OPTIONS } from "@/config/color";
 import STYLE_CONFIG from "@/config/style";
 import { useSettingStore } from "@/store";
+
+
+import sidePng from "@/assets/side.png";
+import topPng from "@/assets/top.png";
+import mixPng from "@/assets/mix.png";
+
 
 const settingStore = useSettingStore();
 
@@ -233,7 +194,14 @@ const handleCloseDrawer = () => {
 
 const getThumbnailUrl = (name: string): string => {
   // return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
-  return `/images/${name}.png`;
+  // console.log((await import(`@/assets/${name}.png`)).default);
+  // return import(`@/assets/${name}.png`);
+  if (name == "side")
+    return sidePng;
+  if (name == "top")
+    return topPng;
+  if (name == "mix")
+    return mixPng;
 };
 
 watchEffect(() => {
@@ -279,7 +247,7 @@ watchEffect(() => {
   padding: 6px !important;
   border: 2px solid transparent !important;
 
-  > .t-radio-button__label {
+  >.t-radio-button__label {
     display: inline-flex;
   }
 }
@@ -353,7 +321,7 @@ watchEffect(() => {
       border-radius: var(--td-radius-default);
       border: 2px solid var(--td-component-border);
 
-      > .t-radio-button__label {
+      >.t-radio-button__label {
         display: inline-flex;
       }
     }
