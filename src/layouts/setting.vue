@@ -193,7 +193,10 @@ const handleCloseDrawer = () => {
 };
 
 const getThumbnailUrl = (name: string): string => {
-  return `/images/${name}.png`;
+  let bashPath = import.meta.env.VITE_BASE_URL;
+  if(bashPath.endsWith("/")) bashPath+="images";
+  else bashPath+="/images";
+  return `${bashPath}/${name}.png`;
 };
 
 watchEffect(() => {
