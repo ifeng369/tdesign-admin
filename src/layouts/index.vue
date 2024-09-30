@@ -24,19 +24,19 @@
 </template>
 
 <script setup lang="ts">
-import '@/style/layout.less';
+import "@/style/layout.less";
 
-import { storeToRefs } from 'pinia';
-import { computed, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { storeToRefs } from "pinia";
+import { computed, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
-import { prefix } from '@/config/global';
-import { useSettingStore, useTabsRouterStore } from '@/store';
+import { prefix } from "@/config/global";
+import { useSettingStore, useTabsRouterStore } from "@/store";
 
-import LayoutContent from './components/LayoutContent.vue';
-import LayoutHeader from './components/LayoutHeader.vue';
-import LayoutSideNav from './components/LayoutSideNav.vue';
-import SettingCom from './setting.vue';
+import LayoutContent from "./components/LayoutContent.vue";
+import LayoutHeader from "./components/LayoutHeader.vue";
+import LayoutSideNav from "./components/LayoutSideNav.vue";
+import SettingCom from "./setting.vue";
 
 const route = useRoute();
 const settingStore = useSettingStore();
@@ -45,7 +45,7 @@ const setting = storeToRefs(settingStore);
 
 const mainLayoutCls = computed(() => [
   {
-    't-layout--with-sider': settingStore.showSidebar,
+    "t-layout--with-sider": settingStore.showSidebar,
   },
 ]);
 
@@ -56,7 +56,14 @@ const appendNewRoute = () => {
     meta: { title },
     name,
   } = route;
-  tabsRouterStore.appendTabRouterList({ path, query, title: title as string, name, isAlive: true, meta: route.meta });
+  tabsRouterStore.appendTabRouterList({
+    path,
+    query,
+    title: title as string,
+    name,
+    isAlive: true,
+    meta: route.meta,
+  });
 };
 
 onMounted(() => {
@@ -67,7 +74,9 @@ watch(
   () => route.path,
   () => {
     appendNewRoute();
-    document.querySelector(`.${prefix}-layout`).scrollTo({ top: 0, behavior: 'smooth' });
+    document
+      .querySelector(`.${prefix}-layout`)
+      .scrollTo({ top: 0, behavior: "smooth" });
   },
 );
 </script>

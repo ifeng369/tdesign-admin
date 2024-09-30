@@ -37,17 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 defineProps({
   layout: String,
 });
 
 const isSearchFocus = ref(false);
-const searchData = ref('');
+const searchData = ref("");
 const changeSearchFocus = (value: boolean) => {
   if (!value) {
-    searchData.value = '';
+    searchData.value = "";
   }
   isSearchFocus.value = value;
 };

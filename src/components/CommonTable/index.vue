@@ -1,6 +1,13 @@
 <template>
   <div class="list-common-table">
-    <t-form ref="form" :data="formData" :label-width="80" colon @reset="onReset" @submit="onSubmit">
+    <t-form
+      ref="form"
+      :data="formData"
+      :label-width="80"
+      colon
+      @reset="onReset"
+      @submit="onSubmit"
+    >
       <t-row>
         <t-col :span="10">
           <t-row :gutter="[24, 24]">
@@ -52,8 +59,16 @@
         </t-col>
 
         <t-col :span="2" class="operation-container">
-          <t-button theme="primary" type="submit" :style="{ marginLeft: 'var(--td-comp-margin-s)' }"> 查询 </t-button>
-          <t-button type="reset" variant="base" theme="default"> 重置 </t-button>
+          <t-button
+            theme="primary"
+            type="submit"
+            :style="{ marginLeft: 'var(--td-comp-margin-s)' }"
+          >
+            查询
+          </t-button>
+          <t-button type="reset" variant="base" theme="default">
+            重置
+          </t-button>
         </t-col>
       </t-row>
     </t-form>
@@ -72,11 +87,41 @@
         @change="rehandleChange"
       >
         <template #status="{ row }">
-          <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light"> 审核失败 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light"> 待审核 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light"> 待履行 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light"> 履行中 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light"> 已完成 </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.FAIL"
+            theme="danger"
+            variant="light"
+          >
+            审核失败
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING"
+            theme="warning"
+            variant="light"
+          >
+            待审核
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.EXEC_PENDING"
+            theme="warning"
+            variant="light"
+          >
+            待履行
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.EXECUTING"
+            theme="success"
+            variant="light"
+          >
+            履行中
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.FINISH"
+            theme="success"
+            variant="light"
+          >
+            已完成
+          </t-tag>
         </template>
         <template #contractType="{ row }">
           <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
@@ -84,17 +129,25 @@
           <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
         </template>
         <template #paymentType="{ row }">
-          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
+          <p
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT"
+            class="payment-col"
+          >
             付款<trend class="dashboard-item-trend" type="up" />
           </p>
-          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT" class="payment-col">
+          <p
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
+            class="payment-col"
+          >
             收款<trend class="dashboard-item-trend" type="down" />
           </p>
         </template>
         <template #op="slotProps">
           <t-space>
             <t-link theme="primary" @click="handleClickDetail()">管理</t-link>
-            <t-link theme="danger" @click="handleClickDelete(slotProps)">删除</t-link>
+            <t-link theme="danger" @click="handleClickDelete(slotProps)"
+              >删除</t-link
+            >
           </t-space>
         </template>
       </t-table>
@@ -109,21 +162,26 @@
   </div>
 </template>
 <script setup lang="ts">
-import { MessagePlugin, PageInfo, PrimaryTableCol, TableRowData } from 'tdesign-vue-next';
-import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {
+  MessagePlugin,
+  PageInfo,
+  PrimaryTableCol,
+  TableRowData,
+} from "tdesign-vue-next";
+import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-import { getList } from '@/api/list';
-import Trend from '@/components/trend/index.vue';
-import { prefix } from '@/config/global';
+import { getList } from "@/api/list";
+import Trend from "@/components/trend/index.vue";
+import { prefix } from "@/config/global";
 import {
   CONTRACT_PAYMENT_TYPES,
   CONTRACT_STATUS,
   CONTRACT_STATUS_OPTIONS,
   CONTRACT_TYPE_OPTIONS,
   CONTRACT_TYPES,
-} from '@/constants';
-import { useSettingStore } from '@/store';
+} from "@/constants";
+import { useSettingStore } from "@/store";
 
 interface FormData {
   name: string;
@@ -137,56 +195,56 @@ const router = useRouter();
 
 const COLUMNS: PrimaryTableCol[] = [
   {
-    title: '合同名称',
-    fixed: 'left',
+    title: "合同名称",
+    fixed: "left",
     width: 280,
     ellipsis: true,
-    align: 'left',
-    colKey: 'name',
+    align: "left",
+    colKey: "name",
   },
-  { title: '合同状态', colKey: 'status', width: 160 },
+  { title: "合同状态", colKey: "status", width: 160 },
   {
-    title: '合同编号',
+    title: "合同编号",
     width: 160,
     ellipsis: true,
-    colKey: 'no',
+    colKey: "no",
   },
   {
-    title: '合同类型',
+    title: "合同类型",
     width: 160,
     ellipsis: true,
-    colKey: 'contractType',
+    colKey: "contractType",
   },
   {
-    title: '合同收付类型',
+    title: "合同收付类型",
     width: 160,
     ellipsis: true,
-    colKey: 'paymentType',
+    colKey: "paymentType",
   },
   {
-    title: '合同金额 (元)',
+    title: "合同金额 (元)",
     width: 160,
     ellipsis: true,
-    colKey: 'amount',
+    colKey: "amount",
   },
   {
-    align: 'left',
-    fixed: 'right',
+    align: "left",
+    fixed: "right",
     width: 160,
-    colKey: 'op',
-    title: '操作',
+    colKey: "op",
+    title: "操作",
   },
 ];
 
 const searchForm = {
-  name: '',
-  no: '',
-  type: '',
+  name: "",
+  no: "",
+  type: "",
 };
 
 const formData = ref<FormData>({ ...searchForm });
-const rowKey = 'index';
-const verticalAlign = 'top' as const;
+const rowKey = "index";
+const verticalAlign = "top" as const;
 const hover = true;
 
 const pagination = ref({
@@ -221,7 +279,7 @@ const confirmBody = computed(() => {
     const { name } = data.value[deleteIdx.value];
     return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
   }
-  return '';
+  return "";
 });
 
 const resetIdx = () => {
@@ -233,7 +291,7 @@ const onConfirmDelete = () => {
   data.value.splice(deleteIdx.value, 1);
   pagination.value.total = data.value.length;
   confirmVisible.value = false;
-  MessagePlugin.success('删除成功');
+  MessagePlugin.success("删除成功");
   resetIdx();
 };
 
@@ -254,25 +312,39 @@ const onReset = (val: unknown) => {
 };
 
 const handleClickDetail = () => {
-  router.push('/detail/base');
+  router.push("/detail/base");
 };
 const onSubmit = (val: unknown) => {
   console.log(val);
   console.log(formData.value);
 };
-const rehandlePageChange = (pageInfo: PageInfo, newDataSource: TableRowData[]) => {
-  console.log('分页变化', pageInfo, newDataSource);
+const rehandlePageChange = (
+  pageInfo: PageInfo,
+  newDataSource: TableRowData[],
+) => {
+  console.log("分页变化", pageInfo, newDataSource);
 };
 const rehandleChange = (changeParams: unknown, triggerAndData: unknown) => {
-  console.log('统一Change', changeParams, triggerAndData);
+  console.log("统一Change", changeParams, triggerAndData);
 };
+
+// const headerAffixedTop = computed(
+//   () =>
+//     ({
+//       offsetTop: store.isUseTabsRouter ? 48 : 0,
+//       container: `.${prefix}-layout`,
+//     }) as any, // todo 待修复
+// );
+
+const computedStyle = getComputedStyle(document.documentElement);
+const sizeXl = computedStyle.getPropertyValue("--td-comp-size-xl");
 
 const headerAffixedTop = computed(
   () =>
     ({
-      offsetTop: store.isUseTabsRouter ? 48 : 0,
+      offsetTop: store.isUseTabsRouter ? parseFloat(sizeXl) : 0,
       container: `.${prefix}-layout`,
-    }) as any, // todo 待修复
+    }) as any,
 );
 </script>
 

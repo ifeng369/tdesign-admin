@@ -6,7 +6,7 @@
           Hi，Image
           <span class="regular"> 下午好，今天是你加入鹅厂的第 100 天～</span>
         </div>
-        <img src="@/assets/assets-tencent-logo.png" class="logo" />
+        <img src="/images/logo.png" class="logo" />
       </div>
 
       <t-card class="user-info-list" title="个人信息" :bordered="false">
@@ -16,7 +16,11 @@
           </t-button>
         </template>
         <t-descriptions :column="4" item-layout="vertical">
-          <t-descriptions-item v-for="(item, index) in USER_INFO_LIST" :key="index" :label="item.title">
+          <t-descriptions-item
+            v-for="(item, index) in USER_INFO_LIST"
+            :key="index"
+            :label="item.title"
+          >
             {{ item.content }}
           </t-descriptions-item>
         </t-descriptions>
@@ -28,7 +32,12 @@
             <p>内容列表</p>
           </t-tab-panel>
           <t-tab-panel value="second" label="内容列表">
-            <t-card :bordered="false" class="card-padding-no" title="主页访问数据" describe="（次）">
+            <t-card
+              :bordered="false"
+              class="card-padding-no"
+              title="主页访问数据"
+              describe="（次）"
+            >
               <template #actions>
                 <t-date-range-picker
                   class="card-date-picker-container"
@@ -63,7 +72,11 @@
         </template>
         <t-list :split="false">
           <t-list-item v-for="(item, index) in TEAM_MEMBERS" :key="index">
-            <t-list-item-meta :image="item.avatar" :title="item.title" :description="item.description" />
+            <t-list-item-meta
+              :image="item.avatar"
+              :title="item.title"
+              :description="item.description"
+            />
           </t-list-item>
         </t-list>
       </t-card>
@@ -85,29 +98,39 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'UserIndex',
+  name: "UserIndex",
 };
 </script>
 <script setup lang="ts">
-import { LineChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import type { DateRangeValue } from 'tdesign-vue-next';
-import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
+import { LineChart } from "echarts/charts";
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from "echarts/components";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import type { DateRangeValue } from "tdesign-vue-next";
+import { computed, nextTick, onMounted, onUnmounted, watch } from "vue";
 
-import ProductAIcon from '@/assets/assets-product-1.svg';
-import ProductBIcon from '@/assets/assets-product-2.svg';
-import ProductCIcon from '@/assets/assets-product-3.svg';
-import ProductDIcon from '@/assets/assets-product-4.svg';
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
+import ProductAIcon from "@/assets/assets-product-1.svg";
+import ProductBIcon from "@/assets/assets-product-2.svg";
+import ProductCIcon from "@/assets/assets-product-3.svg";
+import ProductDIcon from "@/assets/assets-product-4.svg";
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { PRODUCT_LIST, TEAM_MEMBERS, USER_INFO_LIST } from './constants';
-import { getFolderLineDataSet } from './index';
+import { PRODUCT_LIST, TEAM_MEMBERS, USER_INFO_LIST } from "./constants";
+import { getFolderLineDataSet } from "./index";
 
-echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer, LegendComponent]);
+echarts.use([
+  GridComponent,
+  TooltipComponent,
+  LineChart,
+  CanvasRenderer,
+  LegendComponent,
+]);
 
 let lineContainer: HTMLElement;
 let lineChart: echarts.ECharts;
@@ -124,7 +147,7 @@ const onLineChange = (value: DateRangeValue) => {
 };
 
 const initChart = () => {
-  lineContainer = document.getElementById('lineContainer');
+  lineContainer = document.getElementById("lineContainer");
   lineChart = echarts.init(lineContainer);
   lineChart.setOption({
     grid: {
@@ -148,22 +171,22 @@ onMounted(() => {
   nextTick(() => {
     initChart();
   });
-  window.addEventListener('resize', updateContainer, false);
+  window.addEventListener("resize", updateContainer, false);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateContainer);
+  window.removeEventListener("resize", updateContainer);
 });
 
 const getIcon = (type: string) => {
   switch (type) {
-    case 'a':
+    case "a":
       return ProductAIcon;
-    case 'b':
+    case "b":
       return ProductBIcon;
-    case 'c':
+    case "c":
       return ProductCIcon;
-    case 'd':
+    case "d":
       return ProductDIcon;
     default:
       return ProductAIcon;
@@ -179,7 +202,7 @@ watch(
 </script>
 
 <style lang="less" scoped>
-@import './index.less';
+@import "./index.less";
 
 .t-descriptions {
   margin-top: 24px;

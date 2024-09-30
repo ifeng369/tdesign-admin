@@ -9,7 +9,11 @@
   >
     <template v-if="type == 'password'">
       <t-form-item name="account">
-        <t-input v-model="formData.account" size="large" placeholder="请输入账号：admin">
+        <t-input
+          v-model="formData.account"
+          size="large"
+          placeholder="请输入账号：admin"
+        >
           <template #prefix-icon>
             <t-icon name="user" />
           </template>
@@ -28,7 +32,10 @@
             <t-icon name="lock-on" />
           </template>
           <template #suffix-icon>
-            <t-icon :name="showPsw ? 'browse' : 'browse-off'" @click="showPsw = !showPsw" />
+            <t-icon
+              :name="showPsw ? 'browse' : 'browse-off'"
+              @click="showPsw = !showPsw"
+            />
           </template>
         </t-input>
       </t-form-item>
@@ -51,7 +58,11 @@
     <!-- 手机号登录 -->
     <template v-else>
       <t-form-item name="phone">
-        <t-input v-model="formData.phone" size="large" placeholder="请输入手机号码">
+        <t-input
+          v-model="formData.phone"
+          size="large"
+          placeholder="请输入手机号码"
+        >
           <template #prefix-icon>
             <t-icon name="mobile" />
           </template>
@@ -59,9 +70,18 @@
       </t-form-item>
 
       <t-form-item class="verification-code" name="verifyCode">
-        <t-input v-model="formData.verifyCode" size="large" placeholder="请输入验证码" />
-        <t-button size="large" variant="outline" :disabled="countDown > 0" @click="sendCode">
-          {{ countDown == 0 ? '发送验证码' : `${countDown}秒后可重发` }}
+        <t-input
+          v-model="formData.verifyCode"
+          size="large"
+          placeholder="请输入验证码"
+        />
+        <t-button
+          size="large"
+          variant="outline"
+          :disabled="countDown > 0"
+          @click="sendCode"
+        >
+          {{ countDown == 0 ? "发送验证码" : `${countDown}秒后可重发` }}
         </t-button>
       </t-form-item>
     </template>
@@ -71,41 +91,54 @@
     </t-form-item>
 
     <div class="switch-container">
-      <span v-if="type !== 'password'" class="tip" @click="switchType('password')">使用账号密码登录</span>
-      <span v-if="type !== 'qrcode'" class="tip" @click="switchType('qrcode')">使用微信扫码登录</span>
-      <span v-if="type !== 'phone'" class="tip" @click="switchType('phone')">使用手机号登录</span>
+      <span
+        v-if="type !== 'password'"
+        class="tip"
+        @click="switchType('password')"
+        >使用账号密码登录</span
+      >
+      <span v-if="type !== 'qrcode'" class="tip" @click="switchType('qrcode')"
+        >使用微信扫码登录</span
+      >
+      <span v-if="type !== 'phone'" class="tip" @click="switchType('phone')"
+        >使用手机号登录</span
+      >
     </div>
   </t-form>
 </template>
 
 <script setup lang="ts">
-import QrcodeVue from 'qrcode.vue';
-import type { FormInstanceFunctions, FormRule, SubmitContext } from 'tdesign-vue-next';
-import { MessagePlugin } from 'tdesign-vue-next';
-import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import QrcodeVue from "qrcode.vue";
+import type {
+  FormInstanceFunctions,
+  FormRule,
+  SubmitContext,
+} from "tdesign-vue-next";
+import { MessagePlugin } from "tdesign-vue-next";
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-import { useCounter } from '@/hooks';
-import { useUserStore } from '@/store';
+import { useCounter } from "@/hooks";
+import { useUserStore } from "@/store";
 
 const userStore = useUserStore();
 
 const INITIAL_DATA = {
-  phone: '',
-  account: 'admin',
-  password: 'admin',
-  verifyCode: '',
+  phone: "",
+  account: "admin",
+  password: "admin",
+  verifyCode: "",
   checked: false,
 };
 
 const FORM_RULES: Record<string, FormRule[]> = {
-  phone: [{ required: true, message: '手机号必填', type: 'error' }],
-  account: [{ required: true, message: '账号必填', type: 'error' }],
-  password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }],
+  phone: [{ required: true, message: "手机号必填", type: "error" }],
+  account: [{ required: true, message: "账号必填", type: "error" }],
+  password: [{ required: true, message: "密码必填", type: "error" }],
+  verifyCode: [{ required: true, message: "验证码必填", type: "error" }],
 };
 
-const type = ref('password');
+const type = ref("password");
 
 const form = ref<FormInstanceFunctions>();
 const formData = ref({ ...INITIAL_DATA });
@@ -124,7 +157,7 @@ const route = useRoute();
  * 发送验证码
  */
 const sendCode = () => {
-  form.value.validate({ fields: ['phone'] }).then((e) => {
+  form.value.validate({ fields: ["phone"] }).then((e) => {
     if (e === true) {
       handleCounter();
     }
@@ -136,9 +169,11 @@ const onSubmit = async (ctx: SubmitContext) => {
     try {
       await userStore.login(formData.value);
 
-      MessagePlugin.success('登录成功');
+      MessagePlugin.success("登录成功");
       const redirect = route.query.redirect as string;
-      const redirectUrl = redirect ? decodeURIComponent(redirect) : '/dashboard';
+      const redirectUrl = redirect
+        ? decodeURIComponent(redirect)
+        : "/dashboard";
       router.push(redirectUrl);
     } catch (e) {
       console.log(e);
@@ -149,5 +184,5 @@ const onSubmit = async (ctx: SubmitContext) => {
 </script>
 
 <style lang="less" scoped>
-@import '../index.less';
+@import "../index.less";
 </style>

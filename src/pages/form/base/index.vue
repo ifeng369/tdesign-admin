@@ -18,7 +18,11 @@
         <t-row class="row-gap" :gutter="[32, 24]">
           <t-col :span="6">
             <t-form-item label="合同名称" name="name">
-              <t-input v-model="formData.name" :style="{ width: '322px' }" placeholder="请输入内容" />
+              <t-input
+                v-model="formData.name"
+                :style="{ width: '322px' }"
+                placeholder="请输入内容"
+              />
             </t-form-item>
           </t-col>
           <t-col :span="6">
@@ -30,7 +34,12 @@
                 class="demo-select-base"
                 clearable
               >
-                <t-option v-for="(item, index) in TYPE_OPTIONS" :key="index" :value="item.value" :label="item.label">
+                <t-option
+                  v-for="(item, index) in TYPE_OPTIONS"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                >
                   {{ item.label }}
                 </t-option>
               </t-select>
@@ -60,7 +69,12 @@
                 placeholder="请选择类型"
                 clearable
               >
-                <t-option v-for="(item, index) in PARTY_A_OPTIONS" :key="index" :value="item.value" :label="item.label">
+                <t-option
+                  v-for="(item, index) in PARTY_A_OPTIONS"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                >
                   {{ item.label }}
                 </t-option>
               </t-select>
@@ -75,7 +89,12 @@
                 class="demo-select-base"
                 clearable
               >
-                <t-option v-for="(item, index) in PARTY_B_OPTIONS" :key="index" :value="item.value" :label="item.label">
+                <t-option
+                  v-for="(item, index) in PARTY_B_OPTIONS"
+                  :key="index"
+                  :value="item.value"
+                  :label="item.label"
+                >
                   {{ item.label }}
                 </t-option>
               </t-select>
@@ -125,7 +144,9 @@
                 :before-upload="beforeUpload"
                 @fail="handleFail"
               >
-                <t-button class="form-submit-upload-btn" variant="outline"> 上传合同文件 </t-button>
+                <t-button class="form-submit-upload-btn" variant="outline">
+                  上传合同文件
+                </t-button>
               </t-upload>
             </t-form-item>
           </t-col>
@@ -134,7 +155,11 @@
         <div class="form-basic-container-title form-title-gap">其它信息</div>
 
         <t-form-item label="备注" name="comment">
-          <t-textarea v-model="formData.comment" :height="124" placeholder="请输入备注" />
+          <t-textarea
+            v-model="formData.comment"
+            :height="124"
+            placeholder="请输入备注"
+          />
         </t-form-item>
         <t-form-item label="公证人">
           <t-avatar-group>
@@ -149,8 +174,17 @@
     <div class="form-submit-container">
       <div class="form-submit-sub">
         <div class="form-submit-left">
-          <t-button theme="primary" class="form-submit-confirm" type="submit"> 确认提交 </t-button>
-          <t-button type="reset" class="form-submit-cancel" theme="default" variant="base"> 取消 </t-button>
+          <t-button theme="primary" class="form-submit-confirm" type="submit">
+            确认提交
+          </t-button>
+          <t-button
+            type="reset"
+            class="form-submit-cancel"
+            theme="default"
+            variant="base"
+          >
+            取消
+          </t-button>
         </div>
       </div>
     </div>
@@ -159,34 +193,44 @@
 
 <script lang="ts">
 export default {
-  name: 'FormBase',
+  name: "FormBase",
 };
 </script>
 
 <script setup lang="ts">
-import type { SubmitContext, UploadFailContext, UploadFile } from 'tdesign-vue-next';
-import { MessagePlugin } from 'tdesign-vue-next';
-import { ref } from 'vue';
+import type {
+  SubmitContext,
+  UploadFailContext,
+  UploadFile,
+} from "tdesign-vue-next";
+import { MessagePlugin } from "tdesign-vue-next";
+import { ref } from "vue";
 
-import { FORM_RULES, INITIAL_DATA, PARTY_A_OPTIONS, PARTY_B_OPTIONS, TYPE_OPTIONS } from './constants';
+import {
+  FORM_RULES,
+  INITIAL_DATA,
+  PARTY_A_OPTIONS,
+  PARTY_B_OPTIONS,
+  TYPE_OPTIONS,
+} from "./constants";
 
 const formData = ref({ ...INITIAL_DATA });
 
 const onReset = () => {
-  MessagePlugin.warning('取消新建');
+  MessagePlugin.warning("取消新建");
 };
 const onSubmit = (ctx: SubmitContext) => {
   if (ctx.validateResult === true) {
-    MessagePlugin.success('新建成功');
+    MessagePlugin.success("新建成功");
   }
 };
 const beforeUpload = (file: UploadFile) => {
   if (!/\.(pdf)$/.test(file.name)) {
-    MessagePlugin.warning('请上传pdf文件');
+    MessagePlugin.warning("请上传pdf文件");
     return false;
   }
   if (file.size > 60 * 1024 * 1024) {
-    MessagePlugin.warning('上传文件不能大于60M');
+    MessagePlugin.warning("上传文件不能大于60M");
     return false;
   }
   return true;
@@ -196,10 +240,10 @@ const handleFail = (options: UploadFailContext) => {
 };
 // 用于格式化接口响应值，error 会被用于上传失败的提示文字；url 表示文件/图片地址
 const formatResponse = (res: any) => {
-  return { ...res, error: '上传失败，请重试', url: res.url };
+  return { ...res, error: "上传失败，请重试", url: res.url };
 };
 </script>
 
 <style lang="less" scoped>
-@import './index.less';
+@import "./index.less";
 </style>

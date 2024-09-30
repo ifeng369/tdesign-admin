@@ -1,14 +1,27 @@
 <template>
   <div class="dashboard-panel-detail">
-    <t-card title="本月采购申请情况" class="dashboard-detail-card" :bordered="false">
+    <t-card
+      title="本月采购申请情况"
+      class="dashboard-detail-card"
+      :bordered="false"
+    >
       <t-row :gutter="[16, 16]">
-        <t-col v-for="(item, index) in PANE_LIST_DATA" :key="index" :xs="6" :xl="3">
+        <t-col
+          v-for="(item, index) in PANE_LIST_DATA"
+          :key="index"
+          :xs="6"
+          :xl="3"
+        >
           <t-card class="dashboard-list-card" :description="item.title">
             <div class="dashboard-list-card__number">{{ item.number }}</div>
             <div class="dashboard-list-card__text">
               <div class="dashboard-list-card__text-left">
                 环比
-                <trend class="icon" :type="item.upTrend ? 'up' : 'down'" :describe="item.upTrend || item.downTrend" />
+                <trend
+                  class="icon"
+                  :type="item.upTrend ? 'up' : 'down'"
+                  :describe="item.upTrend || item.downTrend"
+                />
               </div>
               <t-icon name="chevron-right" />
             </div>
@@ -18,7 +31,12 @@
     </t-card>
     <t-row :gutter="[16, 16]" class="row-margin">
       <t-col :xs="12" :xl="9">
-        <t-card class="dashboard-detail-card" title="采购商品申请趋势" subtitle="(件)" :bordered="false">
+        <t-card
+          class="dashboard-detail-card"
+          title="采购商品申请趋势"
+          subtitle="(件)"
+          :bordered="false"
+        >
           <template #actions>
             <t-date-range-picker
               class="card-date-picker-container"
@@ -41,14 +59,22 @@
         />
       </t-col>
     </t-row>
-    <t-card :class="['dashboard-detail-card', 'row-margin']" title="采购商品满意度分布" :bordered="false">
+    <t-card
+      :class="['dashboard-detail-card', 'row-margin']"
+      title="采购商品满意度分布"
+      :bordered="false"
+    >
       <template #actions>
         <t-date-range-picker
           class="card-date-picker-container"
           :default-value="LAST_7_DAYS"
           theme="primary"
           mode="date"
-          style="display: inline-block; margin-right: var(--td-comp-margin-s); width: 248px"
+          style="
+            display: inline-block;
+            margin-right: var(--td-comp-margin-s);
+            width: 248px;
+          "
           @change="onSatisfyChange"
         />
         <t-button class="card-date-button"> 导出数据 </t-button>
@@ -60,28 +86,39 @@
 
 <script lang="ts">
 export default {
-  name: 'DashboardDetail',
+  name: "DashboardDetail",
 };
 </script>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import { LineChart, ScatterChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { computed, nextTick, onDeactivated, onMounted, watch } from 'vue';
+import { useWindowSize } from "@vueuse/core";
+import { LineChart, ScatterChart } from "echarts/charts";
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from "echarts/components";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { computed, nextTick, onDeactivated, onMounted, watch } from "vue";
 
-import ProductCard from '@/components/ProductCard/index.vue';
-import Trend from '@/components/trend/index.vue';
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
+import ProductCard from "@/components/ProductCard/index.vue";
+import Trend from "@/components/trend/index.vue";
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { PANE_LIST_DATA, PRODUCT_LIST } from './constants';
-import { getFolderLineDataSet, getScatterDataSet } from './index';
+import { PANE_LIST_DATA, PRODUCT_LIST } from "./constants";
+import { getFolderLineDataSet, getScatterDataSet } from "./index";
 
-echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, ScatterChart, CanvasRenderer]);
+echarts.use([
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+  LineChart,
+  ScatterChart,
+  CanvasRenderer,
+]);
 
 const store = useSettingStore();
 const chartColors = computed(() => store.chartColors);
@@ -90,7 +127,7 @@ const chartColors = computed(() => store.chartColors);
 let lineContainer: HTMLElement;
 let lineChart: echarts.ECharts;
 const renderLineChart = () => {
-  lineContainer = document.getElementById('lineContainer');
+  lineContainer = document.getElementById("lineContainer");
   lineChart = echarts.init(lineContainer);
   lineChart.setOption(getFolderLineDataSet({ ...chartColors.value }));
 };
@@ -99,7 +136,7 @@ const renderLineChart = () => {
 let scatterContainer: HTMLElement;
 let scatterChart: echarts.ECharts;
 const renderScatterChart = () => {
-  scatterContainer = document.getElementById('scatterContainer');
+  scatterContainer = document.getElementById("scatterContainer");
   scatterChart = echarts.init(scatterContainer);
   scatterChart.setOption(getScatterDataSet({ ...chartColors.value }));
 };
@@ -158,7 +195,9 @@ const onSatisfyChange = () => {
 
 const onMaterialChange = (value: string[]) => {
   const chartColors = computed(() => store.chartColors);
-  lineChart.setOption(getFolderLineDataSet({ dateTime: value, ...chartColors.value }));
+  lineChart.setOption(
+    getFolderLineDataSet({ dateTime: value, ...chartColors.value }),
+  );
 };
 </script>
 

@@ -21,11 +21,18 @@
       </div>
       <div class="operator-item">
         <span class="operator-item-info">{{ data.info }}</span>
-        <t-icon class="operator-item-icon" name="chevron-right" size="small" style="color: rgb(0 0 0 / 26%)" />
+        <t-icon
+          class="operator-item-icon"
+          name="chevron-right"
+          size="small"
+          style="color: rgb(0 0 0 / 26%)"
+        />
       </div>
     </div>
     <div class="operator-footer">
-      <span class="operator-footer-percentage">{{ data.use }} / {{ data.stock }}（台）</span>
+      <span class="operator-footer-percentage"
+        >{{ data.use }} / {{ data.stock }}（台）</span
+      >
       <t-progress
         class="operator-progress"
         theme="line"
@@ -39,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {

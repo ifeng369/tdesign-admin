@@ -4,11 +4,23 @@
       <t-row justify="space-between">
         <div class="left-operation-container">
           <t-button @click="handleSetupContract"> 新建合同 </t-button>
-          <t-button variant="base" theme="default" :disabled="!selectedRowKeys.length"> 导出合同 </t-button>
-          <p v-if="!!selectedRowKeys.length" class="selected-count">已选{{ selectedRowKeys.length }}项</p>
+          <t-button
+            variant="base"
+            theme="default"
+            :disabled="!selectedRowKeys.length"
+          >
+            导出合同
+          </t-button>
+          <p v-if="!!selectedRowKeys.length" class="selected-count">
+            已选{{ selectedRowKeys.length }}项
+          </p>
         </div>
         <div class="search-input">
-          <t-input v-model="searchValue" placeholder="请输入你需要搜索的内容" clearable>
+          <t-input
+            v-model="searchValue"
+            placeholder="请输入你需要搜索的内容"
+            clearable
+          >
             <template #suffix-icon>
               <search-icon size="16px" />
             </template>
@@ -30,11 +42,41 @@
         @select-change="rehandleSelectChange"
       >
         <template #status="{ row }">
-          <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light"> 审核失败 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light"> 待审核 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light"> 待履行 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light"> 履行中 </t-tag>
-          <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light"> 已完成 </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.FAIL"
+            theme="danger"
+            variant="light"
+          >
+            审核失败
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING"
+            theme="warning"
+            variant="light"
+          >
+            待审核
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.EXEC_PENDING"
+            theme="warning"
+            variant="light"
+          >
+            待履行
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.EXECUTING"
+            theme="success"
+            variant="light"
+          >
+            履行中
+          </t-tag>
+          <t-tag
+            v-if="row.status === CONTRACT_STATUS.FINISH"
+            theme="success"
+            variant="light"
+          >
+            已完成
+          </t-tag>
         </template>
         <template #contractType="{ row }">
           <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
@@ -42,10 +84,16 @@
           <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
         </template>
         <template #paymentType="{ row }">
-          <div v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
+          <div
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT"
+            class="payment-col"
+          >
             付款<trend class="dashboard-item-trend" type="up" />
           </div>
-          <div v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT" class="payment-col">
+          <div
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
+            class="payment-col"
+          >
             收款<trend class="dashboard-item-trend" type="down" />
           </div>
         </template>
@@ -53,7 +101,9 @@
         <template #op="slotProps">
           <t-space>
             <t-link theme="primary" @click="handleClickDetail()">详情</t-link>
-            <t-link theme="danger" @click="handleClickDelete(slotProps)">删除</t-link>
+            <t-link theme="danger" @click="handleClickDelete(slotProps)"
+              >删除</t-link
+            >
           </t-space>
         </template>
       </t-table>
@@ -71,23 +121,27 @@
 
 <script lang="ts">
 export default {
-  name: 'ListBase',
+  name: "ListBase",
 };
 </script>
 
 <script setup lang="ts">
-import { SearchIcon } from 'tdesign-icons-vue-next';
-import { MessagePlugin, SelectOptions, TableRowData } from 'tdesign-vue-next';
-import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { SearchIcon } from "tdesign-icons-vue-next";
+import { MessagePlugin, SelectOptions, TableRowData } from "tdesign-vue-next";
+import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-import { getList } from '@/api/list';
-import Trend from '@/components/trend/index.vue';
-import { prefix } from '@/config/global';
-import { CONTRACT_PAYMENT_TYPES, CONTRACT_STATUS, CONTRACT_TYPES } from '@/constants';
-import { useSettingStore } from '@/store';
+import { getList } from "@/api/list";
+import Trend from "@/components/trend/index.vue";
+import { prefix } from "@/config/global";
+import {
+  CONTRACT_PAYMENT_TYPES,
+  CONTRACT_STATUS,
+  CONTRACT_TYPES,
+} from "@/constants";
+import { useSettingStore } from "@/store";
 
-import { COLUMNS } from './constants';
+import { COLUMNS } from "./constants";
 
 const store = useSettingStore();
 
@@ -98,7 +152,7 @@ const pagination = ref({
   defaultCurrent: 1,
 });
 
-const searchValue = ref('');
+const searchValue = ref("");
 
 const dataLoading = ref(false);
 const fetchData = async () => {
@@ -123,7 +177,7 @@ const confirmBody = computed(() => {
     const { name } = data.value[deleteIdx.value];
     return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
   }
-  return '';
+  return "";
 });
 
 onMounted(() => {
@@ -149,7 +203,7 @@ const onConfirmDelete = () => {
     selectedRowKeys.value.splice(selectedIdx, 1);
   }
   confirmVisible.value = false;
-  MessagePlugin.success('删除成功');
+  MessagePlugin.success("删除成功");
   resetIdx();
 };
 
@@ -157,32 +211,35 @@ const onCancel = () => {
   resetIdx();
 };
 
-const rowKey = 'index';
+const rowKey = "index";
 
-const rehandleSelectChange = (val: (string|number)[]) => {
+const rehandleSelectChange = (val: (string | number)[]) => {
   selectedRowKeys.value = val as number[];
 };
 const rehandlePageChange = (curr: unknown, pageInfo: unknown) => {
-  console.log('分页变化', curr, pageInfo);
+  console.log("分页变化", curr, pageInfo);
 };
 const rehandleChange = (changeParams: unknown, triggerAndData: unknown) => {
-  console.log('统一Change', changeParams, triggerAndData);
+  console.log("统一Change", changeParams, triggerAndData);
 };
 const handleClickDetail = () => {
-  router.push('/detail/base');
+  router.push("/detail/base");
 };
 const handleSetupContract = () => {
-  router.push('/form/base');
+  router.push("/form/base");
 };
 const handleClickDelete = (row: { rowIndex: any }) => {
   deleteIdx.value = row.rowIndex;
   confirmVisible.value = true;
 };
 
+const computedStyle = getComputedStyle(document.documentElement);
+const sizeXl = computedStyle.getPropertyValue("--td-comp-size-xl");
+
 const headerAffixedTop = computed(
   () =>
     ({
-      offsetTop: store.isUseTabsRouter ? 48 : 0,
+      offsetTop: store.isUseTabsRouter ? parseFloat(sizeXl) : 0,
       container: `.${prefix}-layout`,
     }) as any,
 );

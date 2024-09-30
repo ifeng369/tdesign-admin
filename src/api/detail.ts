@@ -1,9 +1,12 @@
-import type { ProjectListResult, PurchaseListResult } from '@/api/model/detailModel';
-import { request } from '@/utils/request';
+import type {
+  ProjectListResult,
+  PurchaseListResult,
+} from "@/api/model/detailModel";
+import { request } from "@/utils/request";
 
 const Api = {
-  PurchaseList: '/get-purchase-list',
-  ProjectList: '/get-project-list',
+  PurchaseList: "/get-purchase-list",
+  ProjectList: "/get-project-list",
 };
 
 export function getPurchaseList() {

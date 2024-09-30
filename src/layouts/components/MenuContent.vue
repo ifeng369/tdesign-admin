@@ -1,8 +1,15 @@
 <template>
   <div>
     <template v-for="item in list" :key="item.path">
-      <template v-if="!item.children || !item.children.length || item.meta?.single">
-        <t-menu-item v-if="getHref(item)" :name="item.path" :value="getPath(item)" @click="openHref(getHref(item)[0])">
+      <template
+        v-if="!item.children || !item.children.length || item.meta?.single"
+      >
+        <t-menu-item
+          v-if="getHref(item)"
+          :name="item.path"
+          :value="getPath(item)"
+          @click="openHref(getHref(item)[0])"
+        >
           <template #icon>
             <component :is="menuIcon(item)" class="t-icon"></component>
           </template>
@@ -15,7 +22,12 @@
           {{ item.title }}
         </t-menu-item>
       </template>
-      <t-submenu v-else :name="item.path" :value="item.path" :title="item.title">
+      <t-submenu
+        v-else
+        :name="item.path"
+        :value="item.path"
+        :title="item.title"
+      >
         <template #icon>
           <component :is="menuIcon(item)" class="t-icon"></component>
         </template>
@@ -25,11 +37,11 @@
   </div>
 </template>
 <script setup lang="tsx">
-import type { PropType } from 'vue';
-import { computed } from 'vue';
+import type { PropType } from "vue";
+import { computed } from "vue";
 
-import { getActive } from '@/router';
-import type { MenuRoute } from '@/types/interface';
+import { getActive } from "@/router";
+import type { MenuRoute } from "@/types/interface";
 
 type ListItemType = MenuRoute & { icon?: string };
 
@@ -47,7 +59,7 @@ const list = computed(() => {
 });
 
 const menuIcon = (item: ListItemType) => {
-  if (typeof item.icon === 'string') return <t-icon name={item.icon} />;
+  if (typeof item.icon === "string") return <t-icon name={item.icon} />;
   const RenderIcon = item.icon;
   return RenderIcon;
 };
@@ -62,7 +74,10 @@ const getMenuList = (list: MenuRoute[], basePath?: string): ListItemType[] => {
   });
   return list
     .map((item) => {
-      const path = basePath && !item.path.includes(basePath) ? `${basePath}/${item.path}` : item.path;
+      const path =
+        basePath && !item.path.includes(basePath)
+          ? `${basePath}/${item.path}`
+          : item.path;
 
       return {
         path,
@@ -85,8 +100,8 @@ const getHref = (item: MenuRoute) => {
 };
 
 const getPath = (item: ListItemType) => {
-  const activeLevel = active.value.split('/').length;
-  const pathLevel = item.path.split('/').length;
+  const activeLevel = active.value.split("/").length;
+  const pathLevel = item.path.split("/").length;
   if (activeLevel > pathLevel && active.value.startsWith(item.path)) {
     return active.value;
   }

@@ -1,13 +1,16 @@
 // 前端 roles 控制菜单权限 通过登录后的角色对菜单就行过滤处理
 // 如果需要前端 roles 控制菜单权限 请使用此文件代码替换 permission.ts 的内容
 
-import { defineStore } from 'pinia';
-import { RouteRecordRaw } from 'vue-router';
+import { defineStore } from "pinia";
+import { RouteRecordRaw } from "vue-router";
 
-import router, { allRoutes } from '@/router';
-import { store } from '@/store';
+import router, { allRoutes } from "@/router";
+import { store } from "@/store";
 
-function filterPermissionsRouters(routes: Array<RouteRecordRaw>, roles: Array<unknown>) {
+function filterPermissionsRouters(
+  routes: Array<RouteRecordRaw>,
+  roles: Array<unknown>,
+) {
   const res: Array<RouteRecordRaw> = [];
   const removeRoutes: Array<RouteRecordRaw> = [];
   routes.forEach((route) => {
@@ -28,9 +31,9 @@ function filterPermissionsRouters(routes: Array<RouteRecordRaw>, roles: Array<un
   return { accessedRouters: res, removeRoutes };
 }
 
-export const usePermissionStore = defineStore('permission', {
+export const usePermissionStore = defineStore("permission", {
   state: () => ({
-    whiteListRouters: ['/login'],
+    whiteListRouters: ["/login"],
     routers: [],
     removeRoutes: [],
   }),
@@ -40,7 +43,7 @@ export const usePermissionStore = defineStore('permission', {
 
       let removeRoutes: Array<RouteRecordRaw> = [];
       // special token
-      if (roles.includes('all')) {
+      if (roles.includes("all")) {
         accessedRouters = allRoutes;
       } else {
         const res = filterPermissionsRouters(allRoutes, roles);

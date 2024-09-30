@@ -2,11 +2,27 @@
   <div>
     <div class="secondary-notification">
       <t-tabs v-model="tabValue">
-        <t-tab-panel v-for="(tab, tabIndex) in TAB_LIST" :key="tabIndex" :value="tab.value" :label="tab.label">
-          <t-list v-if="msgDataList.length > 0" class="secondary-msg-list" :split="true">
+        <t-tab-panel
+          v-for="(tab, tabIndex) in TAB_LIST"
+          :key="tabIndex"
+          :value="tab.value"
+          :label="tab.label"
+        >
+          <t-list
+            v-if="msgDataList.length > 0"
+            class="secondary-msg-list"
+            :split="true"
+          >
             <t-list-item v-for="(item, index) in msgDataList" :key="index">
-              <p :class="['content', { unread: item.status }]" @click="setReadStatus(item)">
-                <t-tag size="medium" :theme="NOTIFICATION_TYPES.get(item.quality)" variant="light">
+              <p
+                :class="['content', { unread: item.status }]"
+                @click="setReadStatus(item)"
+              >
+                <t-tag
+                  size="medium"
+                  :theme="NOTIFICATION_TYPES.get(item.quality)"
+                  variant="light"
+                >
                   {{ item.type }}
                 </t-tag>
                 {{ item.content }}
@@ -25,7 +41,10 @@
                       <t-icon v-else name="chat" />
                     </span>
                   </t-tooltip>
-                  <t-tooltip content="删除通知" :overlay-style="{ margin: '6px' }">
+                  <t-tooltip
+                    content="删除通知"
+                    :overlay-style="{ margin: '6px' }"
+                  >
                     <span @click="handleClickDeleteBtn(item)">
                       <t-icon name="delete" size="16px" />
                     </span>
@@ -52,35 +71,35 @@
 
 <script lang="ts">
 export default {
-  name: 'DetailSecondary',
+  name: "DetailSecondary",
 };
 </script>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { storeToRefs } from "pinia";
+import { computed, ref } from "vue";
 
-import EmptyIcon from '@/assets/assets-empty.svg?component';
-import { NOTIFICATION_TYPES } from '@/constants';
-import { useNotificationStore } from '@/store';
-import type { NotificationItem } from '@/types/interface';
+import EmptyIcon from "@/assets/assets-empty.svg?component";
+import { NOTIFICATION_TYPES } from "@/constants";
+import { useNotificationStore } from "@/store";
+import type { NotificationItem } from "@/types/interface";
 
 const TAB_LIST = [
   {
-    label: '全部通知',
-    value: 'msgData',
+    label: "全部通知",
+    value: "msgData",
   },
   {
-    label: '未读通知',
-    value: 'unreadMsg',
+    label: "未读通知",
+    value: "unreadMsg",
   },
   {
-    label: '已读通知',
-    value: 'readMsg',
+    label: "已读通知",
+    value: "readMsg",
   },
 ];
 
-const tabValue = ref('msgData');
+const tabValue = ref("msgData");
 
 const visible = ref(false);
 const selectedItem = ref<NotificationItem>();
@@ -89,9 +108,9 @@ const store = useNotificationStore();
 const { msgData, unreadMsg, readMsg } = storeToRefs(store);
 
 const msgDataList = computed(() => {
-  if (tabValue.value === 'msgData') return msgData.value;
-  if (tabValue.value === 'unreadMsg') return unreadMsg.value;
-  if (tabValue.value === 'readMsg') return readMsg.value;
+  if (tabValue.value === "msgData") return msgData.value;
+  if (tabValue.value === "unreadMsg") return unreadMsg.value;
+  if (tabValue.value === "readMsg") return readMsg.value;
   return [];
 });
 
@@ -124,5 +143,5 @@ const deleteMsg = () => {
 </script>
 
 <style lang="less" scoped>
-@import './index.less';
+@import "./index.less";
 </style>

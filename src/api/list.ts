@@ -1,9 +1,9 @@
-import type { CardListResult, ListResult } from '@/api/model/listModel';
-import { request } from '@/utils/request';
+import type { CardListResult, ListResult } from "@/api/model/listModel";
+import { request } from "@/utils/request";
 
 const Api = {
-  BaseList: '/get-list',
-  CardList: '/get-card-list',
+  BaseList: "/get-list",
+  CardList: "/get-card-list",
 };
 
 export function getList() {

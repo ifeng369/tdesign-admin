@@ -4,11 +4,20 @@
       <div class="header-msg">
         <div class="header-msg-top">
           <p>通知中心</p>
-          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary" @click="setRead('all')"
+          <t-button
+            v-if="unreadMsg.length > 0"
+            class="clear-btn"
+            variant="text"
+            theme="primary"
+            @click="setRead('all')"
             >清空</t-button
           >
         </div>
-        <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="false">
+        <t-list
+          v-if="unreadMsg.length > 0"
+          class="narrow-scrollbar"
+          :split="false"
+        >
           <t-list-item v-for="(item, index) in unreadMsg" :key="index">
             <div>
               <p class="msg-content">{{ item.content }}</p>
@@ -16,18 +25,29 @@
             </div>
             <p class="msg-time">{{ item.date }}</p>
             <template #action>
-              <t-button size="small" variant="outline" @click="setRead('radio', item)"> 设为已读 </t-button>
+              <t-button
+                size="small"
+                variant="outline"
+                @click="setRead('radio', item)"
+              >
+                设为已读
+              </t-button>
             </template>
           </t-list-item>
         </t-list>
 
         <div v-else class="empty-list">
           <!-- <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" /> -->
-          <nothing style="height: 60px;"/>
+          <nothing style="height: 60px" />
           <p>暂无通知</p>
         </div>
         <div v-if="unreadMsg.length > 0" class="header-msg-bottom">
-          <t-button class="header-msg-bottom-link" variant="text" theme="default" block @click="goDetail"
+          <t-button
+            class="header-msg-bottom-link"
+            variant="text"
+            theme="default"
+            block
+            @click="goDetail"
             >查看全部</t-button
           >
         </div>
@@ -42,12 +62,12 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
-import { useNotificationStore } from '@/store';
-import type { NotificationItem } from '@/types/interface';
-import nothing from '@/assets/assets-nothing.svg?component';
+import { useNotificationStore } from "@/store";
+import type { NotificationItem } from "@/types/interface";
+import nothing from "@/assets/assets-nothing.svg?component";
 
 const router = useRouter();
 const store = useNotificationStore();
@@ -55,7 +75,7 @@ const { msgData, unreadMsg } = storeToRefs(store);
 
 const setRead = (type: string, item?: NotificationItem) => {
   const changeMsg = msgData.value;
-  if (type === 'all') {
+  if (type === "all") {
     changeMsg.forEach((e) => {
       e.status = false;
     });
@@ -70,7 +90,7 @@ const setRead = (type: string, item?: NotificationItem) => {
 };
 
 const goDetail = () => {
-  router.push('/detail/secondary');
+  router.push("/detail/secondary");
 };
 </script>
 
@@ -78,7 +98,8 @@ const goDetail = () => {
 .header-msg {
   width: 400px;
   // height: 440px;
-  margin: calc(0px - var(--td-comp-paddingTB-xs)) calc(0px - var(--td-comp-paddingLR-s));
+  margin: calc(0px - var(--td-comp-paddingTB-xs))
+    calc(0px - var(--td-comp-paddingLR-s));
 
   .empty-list {
     // height: calc(100% - 120px);

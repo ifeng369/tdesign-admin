@@ -1,4 +1,4 @@
-@import './font-family.less';
+@import "./font-family.less";
 
 // layout rewrite
 
@@ -85,10 +85,14 @@
       position: fixed;
       overflow: visible;
       z-index: 100;
+      .t-tabs__nav-item {
+        height: var(--td-comp-size-xl);
+        line-height: var(--td-comp-size-xl);
+      }
     }
-    &-tabs-nav + .@{starter-prefix}-content-layout {
-      padding-top: var(--td-comp-paddingTB-xxl);
-    }
+    // &-tabs-nav + .@{starter-prefix}-content-layout {
+    //   padding-top: var(--td-comp-paddingTB-xxl);
+    // }
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -173,7 +177,7 @@
     &-logo-normal {
       color: var(--td-brand-color);
       font: var(--td-font-body-large);
-      transition: all 0.3s;
+      // transition: all 0.3s;
     }
   }
 
@@ -184,12 +188,12 @@
   &-side-nav-placeholder {
     flex: 1 1 232px;
     min-width: 232px;
-    transition: all 0.3s;
+    // transition: all 0.3s;
 
     &-hidden {
       flex: 1 1 72px;
       min-width: 72px;
-      transition: all 0.3s;
+      // transition: all 0.3s;
     }
   }
 }

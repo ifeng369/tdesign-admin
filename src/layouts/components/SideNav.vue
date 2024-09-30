@@ -10,35 +10,43 @@
       @expand="onExpanded"
     >
       <template #logo>
-        <span v-if="showLogo" :class="`${prefix}-side-nav-logo-wrapper`" @click="goHome">
+        <span
+          v-if="showLogo"
+          :class="`${prefix}-side-nav-logo-wrapper`"
+          @click="goHome"
+        >
           <component :is="getLogo()" :class="logoCls" />
         </span>
       </template>
       <menu-content :nav-data="menu" />
       <template #operations>
-        <span :class="versionCls"> {{ !collapsed ? 'TDesign Starter' : '' }} {{ pgk.version }} </span>
+        <span :class="versionCls">
+          {{ !collapsed ? "TDesign Starter" : "" }} {{ pgk.version }}
+        </span>
       </template>
     </t-menu>
-    <div :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`"></div>
+    <div
+      :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { difference, remove, union } from 'lodash';
-import { MenuValue } from 'tdesign-vue-next';
-import type { PropType } from 'vue';
-import { computed, onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { difference, remove, union } from "lodash";
+import { MenuValue } from "tdesign-vue-next";
+import type { PropType } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 
-import AssetLogoFull from '@/assets/assets-logo-full.svg?component';
-import AssetLogo from '@/assets/assets-t-logo.svg?component';
-import { prefix } from '@/config/global';
-import { getActive } from '@/router';
-import { useSettingStore } from '@/store';
-import type { MenuRoute, ModeType } from '@/types/interface';
+import AssetLogoFull from "@/assets/assets-logo-full.svg?component";
+import AssetLogo from "@/assets/assets-t-logo.svg?component";
+import { prefix } from "@/config/global";
+import { getActive } from "@/router";
+import { useSettingStore } from "@/store";
+import type { MenuRoute, ModeType } from "@/types/interface";
 
-import pgk from '../../../package.json';
-import MenuContent from './MenuContent.vue';
+import pgk from "../../../package.json";
+import MenuContent from "./MenuContent.vue";
 
 const MIN_POINT = 992 - 1;
 
@@ -57,15 +65,15 @@ const props = defineProps({
   },
   layout: {
     type: String as PropType<string>,
-    default: '',
+    default: "",
   },
   headerHeight: {
     type: String as PropType<string>,
-    default: '64px',
+    default: "64px",
   },
   theme: {
     type: String as PropType<ModeType>,
-    default: 'light',
+    default: "light",
   },
   isCompact: {
     type: Boolean as PropType<boolean>,
@@ -84,8 +92,10 @@ watch(
   () => active.value,
   () => {
     const path = getActive();
-    const parentPath = path.substring(0, path.lastIndexOf('/'));
-    expanded.value = menuAutoCollapsed.value ? [parentPath] : union([parentPath], expanded.value);
+    const parentPath = path.substring(0, path.lastIndexOf("/"));
+    expanded.value = menuAutoCollapsed.value
+      ? [parentPath]
+      : union([parentPath], expanded.value);
   },
 );
 
@@ -98,7 +108,7 @@ const onExpanded = (value: MenuValue[]) => {
 
 const sideMode = computed(() => {
   const { theme } = props;
-  return theme === 'dark';
+  return theme === "dark";
 });
 const sideNavCls = computed(() => {
   const { isCompact } = props;
@@ -111,7 +121,7 @@ const sideNavCls = computed(() => {
 });
 const logoCls = computed(() => {
   return [
-    `${prefix}-side-nav-logo-${collapsed.value ? 't' : 'tdesign'}-logo`,
+    `${prefix}-side-nav-logo-${collapsed.value ? "t" : "tdesign"}-logo`,
     {
       [`${prefix}-side-nav-dark`]: sideMode.value,
     },
@@ -132,7 +142,7 @@ const menuCls = computed(() => {
     {
       [`${prefix}-side-nav-no-logo`]: !showLogo,
       [`${prefix}-side-nav-no-fixed`]: !isFixed,
-      [`${prefix}-side-nav-mix-fixed`]: layout === 'mix' && isFixed,
+      [`${prefix}-side-nav-mix-fixed`]: layout === "mix" && isFixed,
     },
   ];
 });
@@ -149,7 +159,7 @@ const autoCollapsed = () => {
 
 onMounted(() => {
   const path = getActive();
-  const parentPath = path.substring(0, path.lastIndexOf('/'));
+  const parentPath = path.substring(0, path.lastIndexOf("/"));
   expanded.value = union([parentPath], expanded.value);
   autoCollapsed();
   window.onresize = () => {
@@ -158,7 +168,7 @@ onMounted(() => {
 });
 
 const goHome = () => {
-  router.push('/dashboard/base');
+  router.push("/dashboard/base");
 };
 
 const getLogo = () => {

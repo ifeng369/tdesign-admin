@@ -1,9 +1,9 @@
-import uniqBy from 'lodash/uniqBy';
-import { computed, toRaw, unref } from 'vue';
-import { useRouter } from 'vue-router';
+import uniqBy from "lodash/uniqBy";
+import { computed, toRaw, unref } from "vue";
+import { useRouter } from "vue-router";
 
-import { useSettingStore, useTabsRouterStore } from '@/store';
-import type { MenuRoute } from '@/types/interface';
+import { useSettingStore, useTabsRouterStore } from "@/store";
+import type { MenuRoute } from "@/types/interface";
 
 export function useFrameKeepAlive() {
   const router = useRouter();
@@ -11,13 +11,15 @@ export function useFrameKeepAlive() {
   const { isUseTabsRouter } = useSettingStore();
   const tabStore = useTabsRouterStore();
   const getFramePages = computed(() => {
-    const ret = getAllFramePages(toRaw(router.getRoutes()) as unknown as MenuRoute[]) || [];
+    const ret =
+      getAllFramePages(toRaw(router.getRoutes()) as unknown as MenuRoute[]) ||
+      [];
     return ret;
   });
 
   const getOpenTabList = computed((): string[] => {
     return tabStore.tabRouters.reduce((prev: string[], next) => {
-      if (next.meta && Reflect.has(next.meta, 'frameSrc')) {
+      if (next.meta && Reflect.has(next.meta, "frameSrc")) {
         prev.push(next.name as string);
       }
       return prev;
@@ -35,7 +37,7 @@ export function useFrameKeepAlive() {
         res.push(...getAllFramePages(children));
       }
     }
-    res = uniqBy(res, 'name');
+    res = uniqBy(res, "name");
     return res;
   }
 

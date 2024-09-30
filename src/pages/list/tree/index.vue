@@ -2,12 +2,22 @@
   <div class="table-tree-container">
     <div class="list-tree-wrapper">
       <div class="list-tree-operator">
-        <t-input v-model="filterText" placeholder="请输入关键词" @change="onInput">
+        <t-input
+          v-model="filterText"
+          placeholder="请输入关键词"
+          @change="onInput"
+        >
           <template #suffix-icon>
             <search-icon size="var(--td-comp-size-xxxs)" />
           </template>
         </t-input>
-        <t-tree :data="TREE_DATA" hover expand-on-click-node :default-expanded="expanded" :filter="filterByText" />
+        <t-tree
+          :data="TREE_DATA"
+          hover
+          expand-on-click-node
+          :default-expanded="expanded"
+          :filter="filterByText"
+        />
       </div>
       <div class="list-tree-content">
         <common-table />
@@ -18,23 +28,23 @@
 
 <script lang="ts">
 export default {
-  name: 'ListTree',
+  name: "ListTree",
 };
 </script>
 
 <script setup lang="ts">
-import { SearchIcon } from 'tdesign-icons-vue-next';
-import type { TreeNodeModel } from 'tdesign-vue-next';
-import { ref } from 'vue';
+import { SearchIcon } from "tdesign-icons-vue-next";
+import type { TreeNodeModel } from "tdesign-vue-next";
+import { ref } from "vue";
 
-import CommonTable from '@/components/CommonTable/index.vue';
+import CommonTable from "@/components/CommonTable/index.vue";
 
-import { TREE_DATA } from './constants';
+import { TREE_DATA } from "./constants";
 
 const filterByText = ref();
 const filterText = ref();
 
-const expanded = ['0', '0-0', '0-1', '0-2', '0-3', '0-4'];
+const expanded = ["0", "0-0", "0-1", "0-2", "0-3", "0-4"];
 
 const onInput = () => {
   filterByText.value = (node: TreeNodeModel) => {

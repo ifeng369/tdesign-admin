@@ -1,6 +1,6 @@
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
-import { RouteMeta } from '@/types/interface';
+import { RouteMeta } from "@/types/interface";
 
 export interface MenuListResult {
   list: Array<RouteItem>;
@@ -8,7 +8,7 @@ export interface MenuListResult {
 
 export type Component<T = any> =
   | ReturnType<typeof defineComponent>
-  | (() => Promise<typeof import('*.vue')>)
+  | (() => Promise<typeof import("*.vue")>)
   | (() => Promise<T>);
 
 export interface RouteItem {

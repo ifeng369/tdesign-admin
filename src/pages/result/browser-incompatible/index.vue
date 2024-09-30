@@ -1,17 +1,23 @@
 <template>
-  <result title="浏览器不兼容" type="ie" tip="抱歉，您正在使用的浏览器版本过低，无法打开当前网页。">
+  <result
+    title="浏览器不兼容"
+    type="ie"
+    tip="抱歉，您正在使用的浏览器版本过低，无法打开当前网页。"
+  >
     <div class="result-slot-container">
-      <t-button class="result-button" @click="() => $router.push('/')">返回首页</t-button>
+      <t-button class="result-button" @click="() => $router.push('/')"
+        >返回首页</t-button
+      >
     </div>
   </result>
 </template>
 <script lang="ts">
 export default {
-  name: 'ResultBrowserIncompatible',
+  name: "ResultBrowserIncompatible",
 };
 </script>
 <script setup lang="ts">
-import Result from '@/components/result/index.vue';
+import Result from "@/components/result/index.vue";
 </script>
 
 <!-- <style lang="less" scoped>

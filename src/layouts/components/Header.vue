@@ -1,19 +1,35 @@
 <template>
   <div :class="layoutCls">
-    <t-head-menu :class="menuCls" :theme="menuTheme" expand-type="popup" :value="active">
+    <t-head-menu
+      :class="menuCls"
+      :theme="menuTheme"
+      expand-type="popup"
+      :value="active"
+    >
       <template #logo>
-        <span v-if="showLogo" class="header-logo-container" @click="handleNav('/dashboard/base')">
+        <span
+          v-if="showLogo"
+          class="header-logo-container"
+          @click="handleNav('/dashboard/base')"
+        >
           <logo-full class="t-logo" />
         </span>
         <div v-else class="header-operate-left">
-          <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
+          <t-button
+            theme="default"
+            shape="square"
+            variant="text"
+            @click="changeCollapsed"
+          >
             <t-icon class="collapsed-icon" name="view-list" />
           </t-button>
           <search :layout="layout" />
         </div>
       </template>
-      <template v-if="layout !== 'side'" #default>
-        <menu-content class="header-menu" :nav-data="menu" />
+      <template #default>
+        <div v-if="layout !== 'side'">
+          <menu-content class="header-menu" :nav-data="menu" />
+        </div>
       </template>
       <template #operations>
         <div class="operations-container">
@@ -36,11 +52,17 @@
           <t-dropdown :min-column-width="120" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
-                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')">
+                <t-dropdown-item
+                  class="operations-dropdown-container-item"
+                  @click="handleNav('/user/index')"
+                >
                   <t-icon class="header-user-avatar" name="user-setting" />
                   个人中心
                 </t-dropdown-item>
-                <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout">
+                <t-dropdown-item
+                  class="operations-dropdown-container-item"
+                  @click="handleLogout"
+                >
                   <t-icon class="header-user-avatar" name="poweroff" />
                   退出登录
                 </t-dropdown-item>
@@ -55,7 +77,12 @@
             </t-button>
           </t-dropdown>
           <t-tooltip placement="bottom" content="系统设置">
-            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
+            <t-button
+              theme="default"
+              shape="square"
+              variant="text"
+              @click="toggleSettingPanel"
+            >
               <setting-icon />
             </t-button>
           </t-tooltip>
@@ -66,29 +93,34 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronDownIcon, PoweroffIcon, SettingIcon, UserCircleIcon } from 'tdesign-icons-vue-next';
-import type { PropType } from 'vue';
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import {
+  ChevronDownIcon,
+  PoweroffIcon,
+  SettingIcon,
+  UserCircleIcon,
+} from "tdesign-icons-vue-next";
+import type { PropType } from "vue";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
-import LogoFull from '@/assets/assets-logo-full.svg?component';
-import { prefix } from '@/config/global';
-import { getActive } from '@/router';
-import { useSettingStore, useUserStore } from '@/store';
-import type { MenuRoute, ModeType } from '@/types/interface';
+import LogoFull from "@/assets/assets-logo-full.svg?component";
+import { prefix } from "@/config/global";
+import { getActive } from "@/router";
+import { useSettingStore, useUserStore } from "@/store";
+import type { MenuRoute, ModeType } from "@/types/interface";
 
-import MenuContent from './MenuContent.vue';
-import Notice from './Notice.vue';
-import Search from './Search.vue';
+import MenuContent from "./MenuContent.vue";
+import Notice from "./Notice.vue";
+import Search from "./Search.vue";
 
 const props = defineProps({
   theme: {
     type: String,
-    default: 'light',
+    default: "light",
   },
   layout: {
     type: String,
-    default: 'top',
+    default: "top",
   },
   showLogo: {
     type: Boolean,
@@ -132,8 +164,9 @@ const menuCls = computed(() => {
     {
       [`${prefix}-header-menu`]: !isFixed,
       [`${prefix}-header-menu-fixed`]: isFixed,
-      [`${prefix}-header-menu-fixed-side`]: layout === 'side' && isFixed,
-      [`${prefix}-header-menu-fixed-side-compact`]: layout === 'side' && isFixed && isCompact,
+      [`${prefix}-header-menu-fixed-side`]: layout === "side" && isFixed,
+      [`${prefix}-header-menu-fixed-side-compact`]:
+        layout === "side" && isFixed && isCompact,
     },
   ];
 });
@@ -150,17 +183,17 @@ const handleNav = (url: string) => {
 
 const handleLogout = () => {
   router.push({
-    path: '/login',
+    path: "/login",
     query: { redirect: encodeURIComponent(router.currentRoute.value.fullPath) },
   });
 };
 
 const navToGitHub = () => {
-  window.open('https://github.com/tencent/tdesign-vue-next-starter');
+  window.open("https://github.com/tencent/tdesign-vue-next-starter");
 };
 
 const navToHelper = () => {
-  window.open('http://tdesign.tencent.com/starter/docs/get-started');
+  window.open("http://tdesign.tencent.com/starter/docs/get-started");
 };
 </script>
 <style lang="less" scoped>
@@ -179,7 +212,7 @@ const navToHelper = () => {
       right: 0;
       z-index: 10;
       width: auto;
-      transition: all 0.3s;
+      // transition: all 0.3s;
 
       &-compact {
         left: 64px;
@@ -252,6 +285,10 @@ const navToHelper = () => {
 
 :deep(.t-head-menu__inner) {
   border-bottom: 1px solid var(--td-component-stroke);
+
+  .t-menu__logo .header-operate-left {
+    margin-left: 0;
+  }
 }
 
 .t-menu--light {

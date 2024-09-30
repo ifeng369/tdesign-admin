@@ -1,17 +1,22 @@
 <template>
   <div :class="prefixCls" :style="getWrapStyle">
     <t-loading :loading="loading" size="large" :style="getWrapStyle">
-      <iframe ref="frameRef" :src="frameSrc" :class="`${prefixCls}__main`" @load="hideLoading"></iframe>
+      <iframe
+        ref="frameRef"
+        :src="frameSrc"
+        :class="`${prefixCls}__main`"
+        @load="hideLoading"
+      ></iframe>
     </t-loading>
   </div>
 </template>
 <script lang="ts" setup>
-import { useWindowSize } from '@vueuse/core';
-import debounce from 'lodash/debounce';
-import { computed, CSSProperties, ref, unref, watch } from 'vue';
+import { useWindowSize } from "@vueuse/core";
+import debounce from "lodash/debounce";
+import { computed, CSSProperties, ref, unref, watch } from "vue";
 
-import { prefix } from '@/config/global';
-import { useSettingStore } from '@/store';
+import { prefix } from "@/config/global";
+import { useSettingStore } from "@/store";
 
 defineProps({
   frameSrc: String,
@@ -32,8 +37,8 @@ const getWrapStyle = computed((): CSSProperties => {
 });
 
 const computedStyle = getComputedStyle(document.documentElement);
-const sizeXxxl = computedStyle.getPropertyValue('--td-comp-size-xxxl');
-const paddingTBXxl = computedStyle.getPropertyValue('--td-comp-paddingTB-m');
+const sizeXxxl = computedStyle.getPropertyValue("--td-comp-size-xxxl");
+const paddingTBXxl = computedStyle.getPropertyValue("--td-comp-paddingTB-m");
 
 function getOuterHeight(dom: Element) {
   let height = dom.clientHeight;
@@ -53,14 +58,20 @@ function calcHeight() {
   let clientHeight = 0;
   const { showFooter, isUseTabsRouter, showBreadcrumb } = settingStore;
   const headerHeight = parseFloat(sizeXxxl);
-  const navDom = document.querySelector('.t-tabs__nav');
+  const navDom = document.querySelector(".t-tabs__nav");
   const navHeight = isUseTabsRouter ? getOuterHeight(navDom) : 0;
-  const breadcrumbDom = document.querySelector('.t-breadcrumb');
+  const breadcrumbDom = document.querySelector(".t-breadcrumb");
   const breadcrumbHeight = showBreadcrumb ? getOuterHeight(breadcrumbDom) : 0;
   const contentPadding = parseFloat(paddingTBXxl) * 2;
-  const footerDom = document.querySelector('.t-layout__footer');
+  const footerDom = document.querySelector(".t-layout__footer");
   const footerHeight = showFooter ? getOuterHeight(footerDom) : 0;
-  const top = headerHeight + navHeight + breadcrumbHeight + contentPadding + footerHeight + 2;
+  const top =
+    headerHeight +
+    navHeight +
+    breadcrumbHeight +
+    contentPadding +
+    footerHeight +
+    2;
   heightRef.value = window.innerHeight - top;
   clientHeight = document.documentElement.clientHeight - top;
   iframe.style.height = `${clientHeight}px`;
@@ -74,12 +85,16 @@ function hideLoading() {
 // 如果窗口大小发生变化
 watch([width, height], debounce(calcHeight, 250));
 watch(
-  [() => settingStore.showFooter, () => settingStore.isUseTabsRouter, () => settingStore.showBreadcrumb],
+  [
+    () => settingStore.showFooter,
+    () => settingStore.isUseTabsRouter,
+    () => settingStore.showBreadcrumb,
+  ],
   debounce(calcHeight, 250),
 );
 </script>
 <style lang="less" scoped>
-@prefix-cls: ~'@{starter-prefix}-iframe-page';
+@prefix-cls: ~"@{starter-prefix}-iframe-page";
 
 .@{prefix-cls} {
   &__mask {

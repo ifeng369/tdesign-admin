@@ -22,7 +22,11 @@
     </t-row>
 
     <!-- 项目列表 -->
-    <t-card title="项目列表" class="container-base-margin-top" :bordered="false">
+    <t-card
+      title="项目列表"
+      class="container-base-margin-top"
+      :bordered="false"
+    >
       <t-table
         :columns="columns"
         :data="data"
@@ -36,13 +40,17 @@
         <template #adminName="{ row }">
           <span>
             {{ row.adminName }}
-            <t-tag v-if="row.adminPhone" size="small">{{ row.adminPhone }}</t-tag>
+            <t-tag v-if="row.adminPhone" size="small">{{
+              row.adminPhone
+            }}</t-tag>
           </span>
         </template>
         <template #op="slotProps">
           <t-space>
             <t-link theme="primary" @click="listClick()">管理</t-link>
-            <t-link theme="danger" @click="deleteClickOp(slotProps)">删除</t-link>
+            <t-link theme="danger" @click="deleteClickOp(slotProps)"
+              >删除</t-link
+            >
           </t-space>
         </template>
         <template #op-column>
@@ -55,7 +63,11 @@
       <template #body>
         <div class="dialog-info-block">
           <div class="dialog-info-block">
-            <div v-for="(item, index) in BASE_INFO_DATA" :key="index" class="info-item">
+            <div
+              v-for="(item, index) in BASE_INFO_DATA"
+              :key="index"
+              class="info-item"
+            >
               <h1>{{ item.name }}</h1>
               <span
                 :class="{
@@ -74,23 +86,29 @@
 
 <script lang="ts">
 export default {
-  name: 'DetailDeploy',
+  name: "DetailDeploy",
 };
 </script>
 
 <script setup lang="ts">
-import { BarChart, LineChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, TitleComponent, ToolboxComponent, TooltipComponent } from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { BarChart, LineChart } from "echarts/charts";
+import {
+  GridComponent,
+  LegendComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+} from "echarts/components";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
-import { getProjectList } from '@/api/detail';
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
+import { getProjectList } from "@/api/detail";
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
 
-import { BASE_INFO_DATA, TABLE_COLUMNS as columns } from './constants';
-import { get2ColBarChartDataSet, getSmoothLineDataSet } from './index';
+import { BASE_INFO_DATA, TABLE_COLUMNS as columns } from "./constants";
+import { get2ColBarChartDataSet, getSmoothLineDataSet } from "./index";
 
 echarts.use([
   TitleComponent,
@@ -131,7 +149,7 @@ const visible = ref(false);
 let monitorContainer: HTMLElement;
 let monitorChart: echarts.ECharts;
 onMounted(() => {
-  monitorContainer = document.getElementById('monitorContainer');
+  monitorContainer = document.getElementById("monitorContainer");
   monitorChart = echarts.init(monitorContainer);
   monitorChart.setOption(getSmoothLineDataSet({ ...chartColors.value }));
   setInterval(() => {
@@ -143,7 +161,7 @@ onMounted(() => {
 let dataContainer: HTMLElement;
 let dataChart: echarts.ECharts;
 onMounted(() => {
-  dataContainer = document.getElementById('dataContainer');
+  dataContainer = document.getElementById("dataContainer");
   dataChart = echarts.init(dataContainer);
   dataChart.setOption(get2ColBarChartDataSet({ ...chartColors.value }));
 });
@@ -161,7 +179,7 @@ const updateContainer = () => {
 };
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateContainer);
+  window.removeEventListener("resize", updateContainer);
 });
 
 const onAlertChange = () => {
@@ -170,7 +188,7 @@ const onAlertChange = () => {
 
 onMounted(() => {
   fetchData();
-  window.addEventListener('resize', updateContainer, false);
+  window.addEventListener("resize", updateContainer, false);
 });
 
 watch(
@@ -184,7 +202,7 @@ const sortChange = (val: unknown) => {
   console.log(val);
 };
 const rehandleChange = (changeParams: unknown, triggerAndData: unknown) => {
-  console.log('统一Change', changeParams, triggerAndData);
+  console.log("统一Change", changeParams, triggerAndData);
 };
 const listClick = () => {
   visible.value = true;
@@ -198,7 +216,7 @@ const deleteClickOp = (e: { rowIndex: number }) => {
 </script>
 
 <style lang="less" scoped>
-@import '../base/index.less';
+@import "../base/index.less";
 
 .detail-deploy {
   :deep(.t-card) {

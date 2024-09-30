@@ -1,10 +1,10 @@
-import uniq from 'lodash/uniq';
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import uniq from "lodash/uniq";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-import menuList from './menu';
-import login from '@/pages/login/index.vue';
+import menuList from "./menu";
+import login from "@/pages/login/index.vue";
 
-const env = import.meta.env.MODE || 'development';
+const env = import.meta.env.MODE || "development";
 
 // // 导入homepage相关固定路由
 // const homepageModules = import.meta.glob('./modules/**/homepage.ts', { eager: true });
@@ -15,13 +15,13 @@ const env = import.meta.env.MODE || 'development';
 // 其他固定路由
 const defaultRouterList: Array<RouteRecordRaw> = [
   {
-    path: '/login',
-    name: 'login',
+    path: "/login",
+    name: "login",
     component: login,
   },
   {
-    path: '/',
-    redirect: '/dashboard/base',
+    path: "/",
+    redirect: "/dashboard/base",
   },
 ];
 // 存放固定路由
@@ -29,7 +29,6 @@ const defaultRouterList: Array<RouteRecordRaw> = [
 // export const fixedRouterList: Array<RouteRecordRaw> = mapModuleRouterList(fixedModules);
 
 // export const RouterList: Array<RouteRecordRaw> = menuList;
-
 
 export const allRoutes = [...menuList, ...defaultRouterList];
 
@@ -50,24 +49,26 @@ export const getActive = (maxLevel = 3): string => {
   const route = router.currentRoute.value;
 
   if (!route.path) {
-    return '';
+    return "";
   }
 
   return route.path
-    .split('/')
+    .split("/")
     .filter((_item: string, index: number) => index <= maxLevel && index > 0)
     .map((item: string) => `/${item}`)
-    .join('');
+    .join("");
 };
 
 const router = createRouter({
-  history: createWebHistory(env === 'site' ? '/starter/vue-next/' : import.meta.env.VITE_BASE_URL),
+  history: createWebHistory(
+    env === "site" ? "/starter/vue-next/" : import.meta.env.VITE_BASE_URL,
+  ),
   routes: allRoutes,
   scrollBehavior() {
     return {
-      el: '#app',
+      el: "#app",
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     };
   },
 });

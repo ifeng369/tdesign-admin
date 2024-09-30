@@ -1,23 +1,31 @@
-import dayjs from 'dayjs';
-import { EChartsOption } from 'echarts';
+import dayjs from "dayjs";
+import { EChartsOption } from "echarts";
 
-import { TChartColor } from '@/config/color';
-import { getRandomArray } from '@/utils/charts';
-import { getChartListColor } from '@/utils/color';
+import { TChartColor } from "@/config/color";
+import { getRandomArray } from "@/utils/charts";
+import { getChartListColor } from "@/utils/color";
 
 /** 首页 仪表盘 折线图 */
 export function constructInitDashboardDataset(type: string) {
-  const dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+  const dateArray: Array<string> = [
+    "周一",
+    "周二",
+    "周三",
+    "周四",
+    "周五",
+    "周六",
+    "周日",
+  ];
 
   const datasetAxis = {
     xAxis: {
-      type: 'category',
+      type: "category",
       show: false,
       data: dateArray,
     },
     yAxis: {
       show: false,
-      type: 'value',
+      type: "value",
     },
     grid: {
       top: 0,
@@ -27,21 +35,21 @@ export function constructInitDashboardDataset(type: string) {
     },
   };
 
-  if (type === 'line') {
+  if (type === "line") {
     const lineDataset = {
       ...datasetAxis,
-      color: ['#fff'],
+      color: ["#fff"],
       series: [
         {
           data: [150, 230, 224, 218, 135, 147, 260],
           type,
           showSymbol: true,
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 0,
           markPoint: {
             data: [
-              { type: 'max', name: '最大值' },
-              { type: 'min', name: '最小值' },
+              { type: "max", name: "最大值" },
+              { type: "min", name: "最小值" },
             ],
           },
           lineStyle: {
@@ -101,14 +109,17 @@ export function constructInitDataset({
   const outArray = [];
   for (let i = 0; i < divideNum; i++) {
     if (dateTime.length > 0) {
-      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
-      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(enhandTime).format('YYYY-MM-DD'));
+      const dateAbsTime: number =
+        (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) /
+        divideNum;
+      const enhandTime: number =
+        new Date(dateTime[0]).getTime() + dateAbsTime * i;
+      timeArray.push(dayjs(enhandTime).format("YYYY-MM-DD"));
     } else {
       timeArray.push(
         dayjs()
-          .subtract(divideNum - i, 'day')
-          .format('YYYY-MM-DD'),
+          .subtract(divideNum - i, "day")
+          .format("YYYY-MM-DD"),
       );
     }
 
@@ -119,10 +130,10 @@ export function constructInitDataset({
   const dataset = {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item',
+      trigger: "item",
     },
     xAxis: {
-      type: 'category',
+      type: "category",
       data: timeArray,
       axisLabel: {
         color: placeholderColor,
@@ -135,7 +146,7 @@ export function constructInitDataset({
       },
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       axisLabel: {
         color: placeholderColor,
       },
@@ -146,13 +157,13 @@ export function constructInitDataset({
       },
     },
     grid: {
-      top: '5%',
-      left: '25px',
+      top: "5%",
+      left: "25px",
       right: 0,
-      bottom: '60px',
+      bottom: "60px",
     },
     legend: {
-      icon: 'rect',
+      icon: "rect",
       itemWidth: 12,
       itemHeight: 4,
       itemGap: 48,
@@ -160,21 +171,21 @@ export function constructInitDataset({
         fontSize: 12,
         color: placeholderColor,
       },
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal',
-      data: ['本月', '上月'],
+      left: "center",
+      bottom: "0",
+      orient: "horizontal",
+      data: ["本月", "上月"],
     },
     series: [
       {
-        name: '本月',
+        name: "本月",
         data: outArray,
-        type: 'bar',
+        type: "bar",
       },
       {
-        name: '上月',
+        name: "上月",
         data: inArray,
-        type: 'bar',
+        type: "bar",
       },
     ],
   };
@@ -200,15 +211,18 @@ export function getLineChartDataSet({
   const outArray = [];
   for (let i = 0; i < divideNum; i++) {
     if (dateTime.length > 0) {
-      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
-      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
+      const dateAbsTime: number =
+        (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) /
+        divideNum;
+      const enhandTime: number =
+        new Date(dateTime[0]).getTime() + dateAbsTime * i;
       // console.log('dateAbsTime..', dateAbsTime, enhandTime);
-      timeArray.push(dayjs(enhandTime).format('MM-DD'));
+      timeArray.push(dayjs(enhandTime).format("MM-DD"));
     } else {
       timeArray.push(
         dayjs()
-          .subtract(divideNum - i, 'day')
-          .format('MM-DD'),
+          .subtract(divideNum - i, "day")
+          .format("MM-DD"),
       );
     }
 
@@ -219,27 +233,27 @@ export function getLineChartDataSet({
   const dataSet = {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item',
+      trigger: "item",
     },
     grid: {
-      left: '0',
-      right: '20px',
-      top: '5px',
-      bottom: '36px',
+      left: "0",
+      right: "20px",
+      top: "5px",
+      bottom: "36px",
       containLabel: true,
     },
     legend: {
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal', // legend 横向布局。
-      data: ['本月', '上月'],
+      left: "center",
+      bottom: "0",
+      orient: "horizontal", // legend 横向布局。
+      data: ["本月", "上月"],
       textStyle: {
         fontSize: 12,
         color: placeholderColor,
       },
     },
     xAxis: {
-      type: 'category',
+      type: "category",
       data: timeArray,
       boundaryGap: false,
       axisLabel: {
@@ -252,7 +266,7 @@ export function getLineChartDataSet({
       },
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       axisLabel: {
         color: placeholderColor,
       },
@@ -264,12 +278,12 @@ export function getLineChartDataSet({
     },
     series: [
       {
-        name: '本月',
+        name: "本月",
         data: outArray,
-        type: 'line',
+        type: "line",
         smooth: false,
         showSymbol: true,
-        symbol: 'circle',
+        symbol: "circle",
         symbolSize: 8,
         itemStyle: {
           borderColor,
@@ -280,12 +294,12 @@ export function getLineChartDataSet({
         },
       },
       {
-        name: '上月',
+        name: "上月",
         data: inArray,
-        type: 'line',
+        type: "line",
         smooth: false,
         showSymbol: true,
-        symbol: 'circle',
+        symbol: "circle",
         symbolSize: 8,
         itemStyle: {
           borderColor,
@@ -314,12 +328,12 @@ export function getPieChartDataSet({
     color: getChartListColor(),
     tooltip: {
       show: false,
-      trigger: 'axis',
+      trigger: "axis",
       position: null,
     },
     grid: {
-      top: '0',
-      right: '0',
+      top: "0",
+      right: "0",
     },
     legend: {
       selectedMode: false,
@@ -329,15 +343,15 @@ export function getPieChartDataSet({
         fontSize: 12,
         color: placeholderColor,
       },
-      left: 'center',
-      bottom: '0',
-      orient: 'horizontal', // legend 横向布局。
+      left: "center",
+      bottom: "0",
+      orient: "horizontal", // legend 横向布局。
     },
     series: [
       {
-        name: '销售渠道',
-        type: 'pie',
-        radius: ['48%', '60%'],
+        name: "销售渠道",
+        type: "pie",
+        radius: ["48%", "60%"],
         avoidLabelOverlap: true,
         selectedMode: true,
         silent: true,
@@ -347,17 +361,17 @@ export function getPieChartDataSet({
         },
         label: {
           show: true,
-          position: 'center',
-          formatter: ['{value|{d}%}', '{name|{b}}'].join('\n'),
+          position: "center",
+          formatter: ["{value|{d}%}", "{name|{b}}"].join("\n"),
           rich: {
             value: {
               color: textColor,
               fontSize: 28,
-              fontWeight: 'normal',
+              fontWeight: "normal",
               lineHeight: 46,
             },
             name: {
-              color: '#909399',
+              color: "#909399",
               fontSize: 12,
               lineHeight: 14,
             },
@@ -371,11 +385,11 @@ export function getPieChartDataSet({
               value: {
                 color: textColor,
                 fontSize: 28,
-                fontWeight: 'normal',
+                fontWeight: "normal",
                 lineHeight: 46,
               },
               name: {
-                color: '#909399',
+                color: "#909399",
                 fontSize: 14,
                 lineHeight: 14,
               },
@@ -388,9 +402,9 @@ export function getPieChartDataSet({
         data: [
           {
             value: 1048,
-            name: '线上',
+            name: "线上",
           },
-          { value: radius * 7, name: '门店' },
+          { value: radius * 7, name: "门店" },
         ],
       },
     ],

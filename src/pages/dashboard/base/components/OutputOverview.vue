@@ -17,33 +17,58 @@
               @change="(value) => onStokeDataChange(value as string[])"
             />
           </template>
-          <div id="stokeContainer" style="width: 100%; height: 351px" class="dashboard-chart-container"></div>
+          <div
+            id="stokeContainer"
+            style="width: 100%; height: 351px"
+            class="dashboard-chart-container"
+          ></div>
         </t-card>
       </t-col>
       <t-col :xs="12" :xl="3">
-        <t-card :bordered="false" :class="{ 'dashboard-overview-card': true, 'export-panel': true }">
+        <t-card
+          :bordered="false"
+          :class="{ 'dashboard-overview-card': true, 'export-panel': true }"
+        >
           <template #actions>
             <t-button>导出数据</t-button>
           </template>
           <t-row>
             <t-col :xs="6" :xl="12">
-              <t-card :bordered="false" subtitle="本月入库总计（件）" class="inner-card">
+              <t-card
+                :bordered="false"
+                subtitle="本月入库总计（件）"
+                class="inner-card"
+              >
                 <div class="inner-card__content">
                   <div class="inner-card__content-title">1726</div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
+                    <trend
+                      class="trend-tag"
+                      type="down"
+                      :is-reverse-color="false"
+                      describe="20.3%"
+                    />
                   </div>
                 </div>
               </t-card>
             </t-col>
             <t-col :xs="6" :xl="12">
-              <t-card :bordered="false" subtitle="本月出库总计（件）" class="inner-card">
+              <t-card
+                :bordered="false"
+                subtitle="本月出库总计（件）"
+                class="inner-card"
+              >
                 <div class="inner-card__content">
                   <div class="inner-card__content-title">226</div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
+                    <trend
+                      class="trend-tag"
+                      type="down"
+                      :is-reverse-color="false"
+                      describe="20.3%"
+                    />
                   </div>
                 </div>
               </t-card>
@@ -57,27 +82,37 @@
 
 <script lang="ts">
 export default {
-  name: 'DashboardBase',
+  name: "DashboardBase",
 };
 </script>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import { LineChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { useWindowSize } from "@vueuse/core";
+import { LineChart } from "echarts/charts";
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from "echarts/components";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 
 // 导入样式
-import Trend from '@/components/trend/index.vue';
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
+import Trend from "@/components/trend/index.vue";
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { constructInitDataset } from '../index';
+import { constructInitDataset } from "../index";
 
-echarts.use([TooltipComponent, LegendComponent, GridComponent, LineChart, CanvasRenderer]);
+echarts.use([
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+]);
 
 const store = useSettingStore();
 const resizeTime = ref(1);
@@ -89,10 +124,12 @@ let stokeContainer: HTMLElement;
 let stokeChart: echarts.ECharts;
 const renderStokeChart = () => {
   if (!stokeContainer) {
-    stokeContainer = document.getElementById('stokeContainer');
+    stokeContainer = document.getElementById("stokeContainer");
   }
   stokeChart = echarts.init(stokeContainer);
-  stokeChart.setOption(constructInitDataset({ dateTime: LAST_7_DAYS, ...chartColors.value }));
+  stokeChart.setOption(
+    constructInitDataset({ dateTime: LAST_7_DAYS, ...chartColors.value }),
+  );
 };
 
 const renderCharts = () => {
@@ -101,10 +138,17 @@ const renderCharts = () => {
 
 // chartSize update
 const updateContainer = () => {
-  if (document.documentElement.clientWidth >= 1400 && document.documentElement.clientWidth < 1920) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 2080).toFixed(2));
+  if (
+    document.documentElement.clientWidth >= 1400 &&
+    document.documentElement.clientWidth < 1920
+  ) {
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 2080).toFixed(2),
+    );
   } else if (document.documentElement.clientWidth < 1080) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 1080).toFixed(2));
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 1080).toFixed(2),
+    );
   } else {
     resizeTime.value = 1;
   }
@@ -146,7 +190,9 @@ watch(
 );
 
 const onStokeDataChange = (checkedValues: string[]) => {
-  stokeChart.setOption(constructInitDataset({ dateTime: checkedValues, ...chartColors.value }));
+  stokeChart.setOption(
+    constructInitDataset({ dateTime: checkedValues, ...chartColors.value }),
+  );
 };
 </script>
 

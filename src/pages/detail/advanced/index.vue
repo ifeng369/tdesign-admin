@@ -2,7 +2,11 @@
   <div class="detail-advanced">
     <t-card :bordered="false">
       <t-descriptions title="基本信息" table-layout="auto">
-        <t-descriptions-item v-for="(item, index) in BASE_INFO_DATA" :key="index" :label="item.name">
+        <t-descriptions-item
+          v-for="(item, index) in BASE_INFO_DATA"
+          :key="index"
+          :label="item.name"
+        >
           <span
             :class="{
               ['inProgress']: item.type && item.type.value === 'inProgress',
@@ -17,19 +21,30 @@
     </t-card>
 
     <!-- 发票进度 -->
-    <t-card title="发票进度" class="container-base-margin-top" :bordered="false">
+    <t-card
+      title="发票进度"
+      class="container-base-margin-top"
+      :bordered="false"
+    >
       <t-row justify="space-between">
         <t-steps :current="updateCurrent">
           <t-step-item title="申请提交" content="已于12月21日提交" />
           <t-step-item title="电子发票" content="预计1～3个工作日" />
-          <t-step-item title="发票已邮寄" content="电子发票开出后7个工作日联系" />
+          <t-step-item
+            title="发票已邮寄"
+            content="电子发票开出后7个工作日联系"
+          />
           <t-step-item title="完成" content="" />
         </t-steps>
       </t-row>
     </t-card>
 
     <!-- 产品目录 -->
-    <t-card title="产品目录" class="container-base-margin-top" :bordered="false">
+    <t-card
+      title="产品目录"
+      class="container-base-margin-top"
+      :bordered="false"
+    >
       <template #actions>
         <t-radio-group default-value="dateVal">
           <t-radio-button value="dateVal"> 季度 </t-radio-button>
@@ -52,7 +67,11 @@
     </t-card>
 
     <!-- 产品采购明细 -->
-    <t-card title="产品采购明细" class="container-base-margin-top" :bordered="false">
+    <t-card
+      title="产品采购明细"
+      class="container-base-margin-top"
+      :bordered="false"
+    >
       <t-table
         :columns="columns"
         :data="data"
@@ -67,7 +86,12 @@
         <template #pdName="{ row }">
           <span>
             {{ row.pdName }}
-            <t-tag v-if="row.pdType" size="medium" style="margin-left: var(--td-comp-margin-s)">{{ row.pdType }}</t-tag>
+            <t-tag
+              v-if="row.pdType"
+              size="medium"
+              style="margin-left: var(--td-comp-margin-s)"
+              >{{ row.pdType }}</t-tag
+            >
           </span>
         </template>
 
@@ -88,7 +112,9 @@
         <template #op="slotProps">
           <t-space>
             <t-link theme="primary" @click="listClick()">管理</t-link>
-            <t-link theme="danger" @click="deleteClickOp(slotProps)">删除</t-link>
+            <t-link theme="danger" @click="deleteClickOp(slotProps)"
+              >删除</t-link
+            >
           </t-space>
         </template>
 
@@ -101,7 +127,11 @@
     <t-dialog v-model:visible="visible" header="基本信息" @confirm="onConfirm">
       <template #body>
         <div class="dialog-info-block">
-          <div v-for="(item, index) in BASE_INFO_DATA" :key="index" class="info-item">
+          <div
+            v-for="(item, index) in BASE_INFO_DATA"
+            :key="index"
+            class="info-item"
+          >
             <h1>{{ item.name }}</h1>
             <span
               :class="{
@@ -121,17 +151,21 @@
 
 <script lang="ts">
 export default {
-  name: 'DetailAdvanced',
+  name: "DetailAdvanced",
 };
 </script>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
-import { getPurchaseList } from '@/api/detail';
+import { getPurchaseList } from "@/api/detail";
 
-import Product from './components/Product.vue';
-import { BASE_INFO_DATA, PRODUCT_LIST, TABLE_COLUMNS_DATA as columns } from './constants';
+import Product from "./components/Product.vue";
+import {
+  BASE_INFO_DATA,
+  PRODUCT_LIST,
+  TABLE_COLUMNS_DATA as columns,
+} from "./constants";
 
 const data = ref([]);
 const pagination = ref({
@@ -174,7 +208,7 @@ const sortChange = (val: unknown) => {
   console.log(val);
 };
 const rehandleChange = (changeParams: unknown, triggerAndData: unknown) => {
-  console.log('统一Change', changeParams, triggerAndData);
+  console.log("统一Change", changeParams, triggerAndData);
 };
 const listClick = () => {
   visible.value = true;
@@ -188,5 +222,5 @@ const onConfirm = () => {
 </script>
 
 <style lang="less" scoped>
-@import './index.less';
+@import "./index.less";
 </style>

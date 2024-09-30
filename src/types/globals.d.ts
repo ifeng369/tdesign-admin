@@ -1,8 +1,8 @@
 // 通用声明
 
 // Vue
-declare module '*.vue' {
-  import { DefineComponent } from 'vue';
+declare module "*.vue" {
+  import { DefineComponent } from "vue";
 
   const component: DefineComponent<{}, {}, any>;
   export default component;
@@ -10,7 +10,7 @@ declare module '*.vue' {
 
 declare type ClassName = { [className: string]: any } | ClassName[] | string;
 
-declare module '*.svg' {
+declare module "*.svg" {
   const CONTENT: string;
   export default CONTENT;
 }

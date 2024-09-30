@@ -12,9 +12,11 @@
       </t-avatar>
     </template>
     <template #status>
-      <t-tag :theme="product.isSetup ? 'success' : 'default'" :disabled="!product.isSetup">{{
-        product.isSetup ? '已启用' : '已停用'
-      }}</t-tag>
+      <t-tag
+        :theme="product.isSetup ? 'success' : 'default'"
+        :disabled="!product.isSetup"
+        >{{ product.isSetup ? "已启用" : "已停用" }}</t-tag
+      >
     </template>
     <template #content>
       <p class="list-card-item_detail--name">{{ product.name }}</p>
@@ -47,7 +49,12 @@
           },
         ]"
       >
-        <t-button theme="default" :disabled="!product.isSetup" shape="square" variant="text">
+        <t-button
+          theme="default"
+          :disabled="!product.isSetup"
+          shape="square"
+          variant="text"
+        >
           <more-icon />
         </t-button>
       </t-dropdown>
@@ -63,8 +70,8 @@ import {
   ServiceIcon,
   ShopIcon,
   UserAvatarIcon,
-} from 'tdesign-icons-vue-next';
-import type { PropType } from 'vue';
+} from "tdesign-icons-vue-next";
+import type { PropType } from "vue";
 
 export interface CardProductType {
   type: number;
@@ -80,16 +87,16 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['manage-product', 'delete-item']);
+const emit = defineEmits(["manage-product", "delete-item"]);
 
-const typeMap = ['A', 'B', 'C', 'D', 'E'];
+const typeMap = ["A", "B", "C", "D", "E"];
 
 const handleClickManage = (product: CardProductType) => {
-  emit('manage-product', product);
+  emit("manage-product", product);
 };
 
 const handleClickDelete = (product: CardProductType) => {
-  emit('delete-item', product);
+  emit("delete-item", product);
 };
 </script>
 

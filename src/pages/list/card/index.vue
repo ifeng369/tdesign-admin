@@ -3,9 +3,16 @@
     <div class="list-card-operation">
       <t-button @click="formDialogVisible = true"> 新建产品 </t-button>
       <div class="search-input">
-        <t-input v-model="searchValue" placeholder="请输入你需要搜索的内容" clearable>
+        <t-input
+          v-model="searchValue"
+          placeholder="请输入你需要搜索的内容"
+          clearable
+        >
           <template #suffix-icon>
-            <search-icon v-if="searchValue === ''" size="var(--td-comp-size-xxxs)" />
+            <search-icon
+              v-if="searchValue === ''"
+              size="var(--td-comp-size-xxxs)"
+            />
           </template>
         </t-input>
       </div>
@@ -63,28 +70,28 @@
 
 <script lang="ts">
 export default {
-  name: 'ListCard',
+  name: "ListCard",
 };
 </script>
 
 <script setup lang="ts">
-import { SearchIcon } from 'tdesign-icons-vue-next';
-import { MessagePlugin } from 'tdesign-vue-next';
-import { computed, onMounted, ref } from 'vue';
+import { SearchIcon } from "tdesign-icons-vue-next";
+import { MessagePlugin } from "tdesign-vue-next";
+import { computed, onMounted, ref } from "vue";
 
-import { getCardList } from '@/api/list';
-import type { CardProductType } from '@/components/ProductCard/index.vue';
-import ProductCard from '@/components/ProductCard/index.vue';
+import { getCardList } from "@/api/list";
+import type { CardProductType } from "@/components/ProductCard/index.vue";
+import ProductCard from "@/components/ProductCard/index.vue";
 
-import type { FormData } from './components/DialogForm.vue';
-import DialogForm from './components/DialogForm.vue';
+import type { FormData } from "./components/DialogForm.vue";
+import DialogForm from "./components/DialogForm.vue";
 
 const INITIAL_DATA: FormData = {
-  name: '',
-  status: '',
-  description: '',
-  type: '0',
-  mark: '',
+  name: "",
+  status: "",
+  description: "",
+  type: "0",
+  mark: "",
   amount: 0,
 };
 
@@ -110,7 +117,9 @@ const fetchData = async () => {
 };
 
 const confirmBody = computed(() =>
-  deleteProduct.value ? `确认删除后${deleteProduct.value.name}的所有产品信息将被清空, 且无法恢复` : '',
+  deleteProduct.value
+    ? `确认删除后${deleteProduct.value.name}的所有产品信息将被清空, 且无法恢复`
+    : "",
 );
 
 onMounted(() => {
@@ -118,7 +127,7 @@ onMounted(() => {
 });
 
 const formDialogVisible = ref(false);
-const searchValue = ref('');
+const searchValue = ref("");
 const confirmVisible = ref(false);
 const formData = ref({ ...INITIAL_DATA });
 
@@ -137,7 +146,7 @@ const onConfirmDelete = () => {
   const { index } = deleteProduct.value;
   productList.value.splice(index - 1, 1);
   confirmVisible.value = false;
-  MessagePlugin.success('删除成功');
+  MessagePlugin.success("删除成功");
 };
 const onCancel = () => {
   deleteProduct.value = undefined;
@@ -147,10 +156,10 @@ const handleManageProduct = (product: CardProductType) => {
   formDialogVisible.value = true;
   formData.value = {
     name: product.name,
-    status: product?.isSetup ? '1' : '0',
+    status: product?.isSetup ? "1" : "0",
     description: product.description,
     type: product.type.toString(),
-    mark: '',
+    mark: "",
     amount: 0,
   };
 };

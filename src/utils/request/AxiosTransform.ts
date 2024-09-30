@@ -1,7 +1,7 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AxiosError } from 'axios';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 
-import type { RequestOptions, Result } from '@/types/axios';
+import type { RequestOptions, Result } from "@/types/axios";
 
 /**
  * @description 创建Axios实例配置
@@ -30,22 +30,34 @@ export abstract class AxiosTransform {
   /**
    * 请求前钩子
    */
-  beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
+  beforeRequestHook?: (
+    config: AxiosRequestConfig,
+    options: RequestOptions,
+  ) => AxiosRequestConfig;
 
   /**
    * 数据处理前钩子
    */
-  transformRequestHook?: <T = any>(res: AxiosResponse<Result>, options: RequestOptions) => T;
+  transformRequestHook?: <T = any>(
+    res: AxiosResponse<Result>,
+    options: RequestOptions,
+  ) => T;
 
   /**
    * 请求失败钩子
    */
-  requestCatchHook?: <T = any>(e: Error | AxiosError, options: RequestOptions) => Promise<T>;
+  requestCatchHook?: <T = any>(
+    e: Error | AxiosError,
+    options: RequestOptions,
+  ) => Promise<T>;
 
   /**
    * 请求拦截器
    */
-  requestInterceptors?: (config: AxiosRequestConfig, options: CreateAxiosOptions) => AxiosRequestConfig;
+  requestInterceptors?: (
+    config: AxiosRequestConfig,
+    options: CreateAxiosOptions,
+  ) => AxiosRequestConfig;
 
   /**
    * 响应拦截器
@@ -60,5 +72,8 @@ export abstract class AxiosTransform {
   /**
    * 响应拦截器错误处理
    */
-  responseInterceptorsCatch?: (error: AxiosError, instance: AxiosInstance) => void;
+  responseInterceptorsCatch?: (
+    error: AxiosError,
+    instance: AxiosInstance,
+  ) => void;
 }

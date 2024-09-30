@@ -1,25 +1,24 @@
-import 'nprogress/nprogress.css'; // progress bar style
+import "nprogress/nprogress.css"; // progress bar style
 
-import NProgress from 'nprogress'; // progress bar
-import { MessagePlugin } from 'tdesign-vue-next';
-import { RouteRecordRaw } from 'vue-router';
+import NProgress from "nprogress"; // progress bar
+import { MessagePlugin } from "tdesign-vue-next";
+import { RouteRecordRaw } from "vue-router";
 
-import router from '@/router';
-import { useUserStore } from '@/store';
-import { PAGE_NOT_FOUND_ROUTE } from '@/utils/route/constant';
+import router from "@/router";
+import { useUserStore } from "@/store";
+import { PAGE_NOT_FOUND_ROUTE } from "@/utils/route/constant";
 
-const whiteListRouters = ['/login'];
+const whiteListRouters = ["/login"];
 
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
 
-
   const userStore = useUserStore();
 
   if (userStore.token) {
-    if (to.path === '/login') {
+    if (to.path === "/login") {
       next();
       return;
     }
@@ -33,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
     } catch (error) {
       MessagePlugin.error(error.message);
       next({
-        path: '/login',
+        path: "/login",
         query: { redirect: encodeURIComponent(to.fullPath) },
       });
       NProgress.done();
@@ -44,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       next({
-        path: '/login',
+        path: "/login",
         query: { redirect: encodeURIComponent(to.fullPath) },
       });
     }
@@ -53,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to) => {
-  if (to.path === '/login') {
+  if (to.path === "/login") {
     const userStore = useUserStore();
     userStore.logout();
   }

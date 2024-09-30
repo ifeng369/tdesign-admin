@@ -1,5 +1,5 @@
-import * as echarts from 'echarts/core';
-import { onMounted, onUnmounted, Ref, ref, ShallowRef, shallowRef } from 'vue';
+import * as echarts from "echarts/core";
+import { onMounted, onUnmounted, Ref, ref, ShallowRef, shallowRef } from "vue";
 
 /**
  * eChart hook
@@ -22,10 +22,10 @@ export const useChart = (domId: string): ShallowRef<echarts.ECharts> => {
     selfChart.value = echarts.init(chartContainer);
   });
 
-  window.addEventListener('resize', updateContainer, false);
+  window.addEventListener("resize", updateContainer, false);
 
   onUnmounted(() => {
-    window.removeEventListener('resize', updateContainer);
+    window.removeEventListener("resize", updateContainer);
   });
 
   return selfChart;

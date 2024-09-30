@@ -4,23 +4,36 @@
       <t-card
         :title="item.title"
         :bordered="false"
-        :class="{ 'dashboard-item': true, 'dashboard-item--main-color': index == 0 }"
+        :class="{
+          'dashboard-item': true,
+          'dashboard-item--main-color': index == 0,
+        }"
       >
         <div class="dashboard-item-top">
-          <span :style="{ fontSize: `${resizeTime * 28}px` }">{{ item.number }}</span>
+          <span :style="{ fontSize: `${resizeTime * 28}px` }">{{
+            item.number
+          }}</span>
         </div>
         <div class="dashboard-item-left">
           <div
             v-if="index === 0"
             id="moneyContainer"
             class="dashboard-chart-container"
-            :style="{ width: `${resizeTime * 120}px`, height: '100px', marginTop: '-24px' }"
+            :style="{
+              width: `${resizeTime * 120}px`,
+              height: '100px',
+              marginTop: '-24px',
+            }"
           ></div>
           <div
             v-else-if="index === 1"
             id="refundContainer"
             class="dashboard-chart-container"
-            :style="{ width: `${resizeTime * 120}px`, height: '56px', marginTop: '-24px' }"
+            :style="{
+              width: `${resizeTime * 120}px`,
+              height: '56px',
+              marginTop: '-24px',
+            }"
           ></div>
           <span v-else-if="index === 2" :style="{ marginTop: `-24px` }">
             <usergroup-icon />
@@ -50,25 +63,25 @@
 
 <script lang="ts">
 export default {
-  name: 'DashboardBase',
+  name: "DashboardBase",
 };
 </script>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import { BarChart, LineChart } from 'echarts/charts';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { FileIcon, UsergroupIcon } from 'tdesign-icons-vue-next';
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { useWindowSize } from "@vueuse/core";
+import { BarChart, LineChart } from "echarts/charts";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { FileIcon, UsergroupIcon } from "tdesign-icons-vue-next";
+import { nextTick, onMounted, ref, watch } from "vue";
 
 // 导入样式
-import Trend from '@/components/trend/index.vue';
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
+import Trend from "@/components/trend/index.vue";
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
 
-import { PANE_LIST } from '../constants';
-import { constructInitDashboardDataset } from '../index';
+import { PANE_LIST } from "../constants";
+import { constructInitDashboardDataset } from "../index";
 
 echarts.use([LineChart, BarChart, CanvasRenderer]);
 
@@ -80,10 +93,10 @@ let moneyContainer: HTMLElement;
 let moneyChart: echarts.ECharts;
 const renderMoneyChart = () => {
   if (!moneyContainer) {
-    moneyContainer = document.getElementById('moneyContainer');
+    moneyContainer = document.getElementById("moneyContainer");
   }
   moneyChart = echarts.init(moneyContainer);
-  moneyChart.setOption(constructInitDashboardDataset('line'));
+  moneyChart.setOption(constructInitDashboardDataset("line"));
 };
 
 // refundCharts
@@ -91,10 +104,10 @@ let refundContainer: HTMLElement;
 let refundChart: echarts.ECharts;
 const renderRefundChart = () => {
   if (!refundContainer) {
-    refundContainer = document.getElementById('refundContainer');
+    refundContainer = document.getElementById("refundContainer");
   }
   refundChart = echarts.init(refundContainer);
-  refundChart.setOption(constructInitDashboardDataset('bar'));
+  refundChart.setOption(constructInitDashboardDataset("bar"));
 };
 
 const renderCharts = () => {
@@ -104,10 +117,17 @@ const renderCharts = () => {
 
 // chartSize update
 const updateContainer = () => {
-  if (document.documentElement.clientWidth >= 1400 && document.documentElement.clientWidth < 1920) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 2080).toFixed(2));
+  if (
+    document.documentElement.clientWidth >= 1400 &&
+    document.documentElement.clientWidth < 1920
+  ) {
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 2080).toFixed(2),
+    );
   } else if (document.documentElement.clientWidth < 1080) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 1080).toFixed(2));
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 1080).toFixed(2),
+    );
   } else {
     resizeTime.value = 1;
   }

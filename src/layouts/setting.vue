@@ -12,19 +12,33 @@
       <t-form ref="form" :data="formData" label-align="left">
         <div class="setting-group-title">主题模式</div>
         <t-radio-group v-model="formData.mode">
-          <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
+          <div
+            v-for="(item, index) in MODE_OPTIONS"
+            :key="index"
+            class="setting-layout-drawer"
+          >
             <div>
               <t-radio-button :key="index" :value="item.type"
                 ><component :is="getModeIcon(item.type)"
               /></t-radio-button>
-              <p :style="{ textAlign: 'center', marginTop: '8px' }">{{ item.text }}</p>
+              <p :style="{ textAlign: 'center', marginTop: '8px' }">
+                {{ item.text }}
+              </p>
             </div>
           </div>
         </t-radio-group>
         <div class="setting-group-title">主题色</div>
         <t-radio-group v-model="formData.brandTheme">
-          <div v-for="(item, index) in DEFAULT_COLOR_OPTIONS" :key="index" class="setting-layout-drawer">
-            <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
+          <div
+            v-for="(item, index) in DEFAULT_COLOR_OPTIONS"
+            :key="index"
+            class="setting-layout-drawer"
+          >
+            <t-radio-button
+              :key="index"
+              :value="item"
+              class="setting-layout-color-group"
+            >
               <color-container :value="item" />
             </t-radio-button>
           </div>
@@ -46,7 +60,10 @@
                   :swatch-colors="[]"
                 />
               </template>
-              <t-radio-button :value="dynamicColor" class="setting-layout-color-group dynamic-color-btn">
+              <t-radio-button
+                :value="dynamicColor"
+                class="setting-layout-color-group dynamic-color-btn"
+              >
                 <color-container :value="dynamicColor" />
               </t-radio-button>
             </t-popup>
@@ -54,16 +71,28 @@
         </t-radio-group>
         <div class="setting-group-title">导航布局</div>
         <t-radio-group v-model="formData.layout">
-          <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+          <div
+            v-for="(item, index) in LAYOUT_OPTION"
+            :key="index"
+            class="setting-layout-drawer"
+          >
             <t-radio-button :key="index" :value="item">
               <thumbnail :src="getThumbnailUrl(item)" />
             </t-radio-button>
           </div>
         </t-radio-group>
-        <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
+        <t-form-item
+          v-show="formData.layout === 'mix'"
+          label="分割菜单（混合模式下有效）"
+          name="splitMenu"
+        >
           <t-switch v-model="formData.splitMenu" />
         </t-form-item>
-        <t-form-item v-show="formData.layout === 'mix'" label="固定 Sidebar" name="isSidebarFixed">
+        <t-form-item
+          v-show="formData.layout === 'mix'"
+          label="固定 Sidebar"
+          name="isSidebarFixed"
+        >
           <t-switch v-model="formData.isSidebarFixed" />
         </t-form-item>
         <div class="setting-group-title">元素开关</div>
@@ -73,9 +102,9 @@
             <t-radio-button key="dark" value="dark" label="暗黑" />
           </t-radio-group>
         </t-form-item>
-        <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
+        <!-- <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
           <t-switch v-model="formData.showHeader" />
-        </t-form-item>
+        </t-form-item> -->
         <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
           <t-switch v-model="formData.showBreadcrumb" />
         </t-form-item>
@@ -91,41 +120,44 @@
       </t-form>
       <div class="setting-info">
         <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-        <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
+        <t-button theme="primary" variant="text" @click="handleCopy">
+          复制配置项
+        </t-button>
       </div>
     </div>
   </t-drawer>
 </template>
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
-import type { PopupVisibleChangeContext } from 'tdesign-vue-next';
-import { MessagePlugin } from 'tdesign-vue-next';
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { useClipboard } from "@vueuse/core";
+import type { PopupVisibleChangeContext } from "tdesign-vue-next";
+import { MessagePlugin } from "tdesign-vue-next";
+import { computed, onMounted, ref, watchEffect } from "vue";
 
-import SettingAutoIcon from '@/assets/assets-setting-auto.svg';
-import SettingDarkIcon from '@/assets/assets-setting-dark.svg';
-import SettingLightIcon from '@/assets/assets-setting-light.svg';
-import ColorContainer from '@/components/color/index.vue';
-import Thumbnail from '@/components/thumbnail/index.vue';
-import { DEFAULT_COLOR_OPTIONS } from '@/config/color';
-import STYLE_CONFIG from '@/config/style';
-import { useSettingStore } from '@/store';
+import SettingAutoIcon from "@/assets/assets-setting-auto.svg";
+import SettingDarkIcon from "@/assets/assets-setting-dark.svg";
+import SettingLightIcon from "@/assets/assets-setting-light.svg";
+import ColorContainer from "@/components/color/index.vue";
+import Thumbnail from "@/components/thumbnail/index.vue";
+import { DEFAULT_COLOR_OPTIONS } from "@/config/color";
+import STYLE_CONFIG from "@/config/style";
+import { useSettingStore } from "@/store";
 
 const settingStore = useSettingStore();
 
-const LAYOUT_OPTION = ['side', 'top', 'mix'];
+const LAYOUT_OPTION = ["side", "top", "mix"];
 
 const MODE_OPTIONS = [
-  { type: 'light', text: '明亮' },
-  { type: 'dark', text: '暗黑' },
-  { type: 'auto', text: '跟随系统' },
+  { type: "light", text: "明亮" },
+  { type: "dark", text: "暗黑" },
+  { type: "auto", text: "跟随系统" },
 ];
 
 const initStyleConfig = () => {
   const styleConfig = STYLE_CONFIG;
   for (const key in styleConfig) {
     if (Object.prototype.hasOwnProperty.call(styleConfig, key)) {
-      (styleConfig[key as keyof typeof STYLE_CONFIG] as any) = settingStore[key as keyof typeof STYLE_CONFIG];
+      (styleConfig[key as keyof typeof STYLE_CONFIG] as any) =
+        settingStore[key as keyof typeof STYLE_CONFIG];
     }
   }
 
@@ -133,8 +165,9 @@ const initStyleConfig = () => {
 };
 
 const dynamicColor = computed(() => {
-  const isDynamic = DEFAULT_COLOR_OPTIONS.indexOf(formData.value.brandTheme) === -1;
-  return isDynamic ? formData.value.brandTheme : '';
+  const isDynamic =
+    DEFAULT_COLOR_OPTIONS.indexOf(formData.value.brandTheme) === -1;
+  return isDynamic ? formData.value.brandTheme : "";
 });
 const formData = ref({ ...initStyleConfig() });
 const isColoPickerDisplay = ref(false);
@@ -155,13 +188,16 @@ const changeColor = (hex: string) => {
 };
 
 onMounted(() => {
-  document.querySelector('.dynamic-color-btn').addEventListener('click', () => {
+  document.querySelector(".dynamic-color-btn").addEventListener("click", () => {
     isColoPickerDisplay.value = true;
   });
 });
 
-const onPopupVisibleChange = (visible: boolean, context: PopupVisibleChangeContext) => {
-  if (!visible && context.trigger === 'document') {
+const onPopupVisibleChange = (
+  visible: boolean,
+  context: PopupVisibleChangeContext,
+) => {
+  if (!visible && context.trigger === "document") {
     isColoPickerDisplay.value = visible;
   }
 };
@@ -172,18 +208,18 @@ const handleCopy = () => {
   copy()
     .then(() => {
       MessagePlugin.closeAll();
-      MessagePlugin.success('复制成功');
+      MessagePlugin.success("复制成功");
     })
     .catch(() => {
       MessagePlugin.closeAll();
-      MessagePlugin.error('复制失败');
+      MessagePlugin.error("复制失败");
     });
 };
 const getModeIcon = (mode: string) => {
-  if (mode === 'light') {
+  if (mode === "light") {
     return SettingLightIcon;
   }
-  if (mode === 'dark') {
+  if (mode === "dark") {
     return SettingDarkIcon;
   }
   return SettingAutoIcon;
@@ -259,7 +295,7 @@ watchEffect(() => {
   line-height: 22px;
   margin: 32px 0 24px;
   text-align: left;
-  font-family: 'PingFang SC', var(--td-font-family);
+  font-family: "PingFang SC", var(--td-font-family);
   font-style: normal;
   font-weight: 500;
   color: var(--td-text-color-primary);

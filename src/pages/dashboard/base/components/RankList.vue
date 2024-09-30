@@ -1,14 +1,22 @@
 <template>
   <t-row :gutter="16" class="row-container">
     <t-col :xs="12" :xl="6">
-      <t-card title="销售订单排名" class="dashboard-rank-card" :bordered="false">
+      <t-card
+        title="销售订单排名"
+        class="dashboard-rank-card"
+        :bordered="false"
+      >
         <template #actions>
           <t-radio-group default-value="dateVal" variant="default-filled">
             <t-radio-button value="dateVal">本周</t-radio-button>
             <t-radio-button value="monthVal">近三月</t-radio-button>
           </t-radio-group>
         </template>
-        <t-table :data="SALE_TEND_LIST" :columns="SALE_COLUMNS" row-key="productName">
+        <t-table
+          :data="SALE_TEND_LIST"
+          :columns="SALE_COLUMNS"
+          row-key="productName"
+        >
           <template #index="{ rowIndex }">
             <span :class="getRankClass(rowIndex)">
               {{ rowIndex + 1 }}
@@ -16,34 +24,52 @@
           </template>
           <template #growUp="{ row }">
             <span>
-              <trend :type="row.growUp > 0 ? 'up' : 'down'" :describe="Math.abs(row.growUp)" />
+              <trend
+                :type="row.growUp > 0 ? 'up' : 'down'"
+                :describe="Math.abs(row.growUp)"
+              />
             </span>
           </template>
           <template #operation="slotProps">
-            <t-link theme="primary" @click="rehandleClickOp(slotProps)">详情</t-link>
+            <t-link theme="primary" @click="rehandleClickOp(slotProps)"
+              >详情</t-link
+            >
           </template>
         </t-table>
       </t-card>
     </t-col>
     <t-col :xs="12" :xl="6">
-      <t-card title="销售订单排名" class="dashboard-rank-card" :bordered="false">
+      <t-card
+        title="销售订单排名"
+        class="dashboard-rank-card"
+        :bordered="false"
+      >
         <template #actions>
           <t-radio-group default-value="dateVal" variant="default-filled">
             <t-radio-button value="dateVal">本周</t-radio-button>
             <t-radio-button value="monthVal">近三月</t-radio-button>
           </t-radio-group>
         </template>
-        <t-table :data="BUY_TEND_LIST" :columns="BUY_COLUMNS" row-key="productName">
+        <t-table
+          :data="BUY_TEND_LIST"
+          :columns="BUY_COLUMNS"
+          row-key="productName"
+        >
           <template #index="{ rowIndex }">
             <span :class="getRankClass(rowIndex)">
               {{ rowIndex + 1 }}
             </span>
           </template>
           <template #growUp="{ row }">
-            <trend :type="row.growUp > 0 ? 'up' : 'down'" :describe="Math.abs(row.growUp)" />
+            <trend
+              :type="row.growUp > 0 ? 'up' : 'down'"
+              :describe="Math.abs(row.growUp)"
+            />
           </template>
           <template #operation="slotProps">
-            <t-link theme="primary" @click="rehandleClickOp(slotProps)">详情</t-link>
+            <t-link theme="primary" @click="rehandleClickOp(slotProps)"
+              >详情</t-link
+            >
           </template>
         </t-table>
       </t-card>
@@ -52,81 +78,81 @@
 </template>
 
 <script setup lang="ts">
-import type { TdBaseTableProps } from 'tdesign-vue-next';
+import type { TdBaseTableProps } from "tdesign-vue-next";
 
-import Trend from '@/components/trend/index.vue';
+import Trend from "@/components/trend/index.vue";
 
-import { BUY_TEND_LIST, SALE_TEND_LIST } from '../constants';
+import { BUY_TEND_LIST, SALE_TEND_LIST } from "../constants";
 
-const SALE_COLUMNS: TdBaseTableProps['columns'] = [
+const SALE_COLUMNS: TdBaseTableProps["columns"] = [
   {
-    align: 'center',
-    colKey: 'index',
-    title: '排名',
+    align: "center",
+    colKey: "index",
+    title: "排名",
     width: 70,
-    fixed: 'left',
+    fixed: "left",
   },
   {
-    align: 'left',
+    align: "left",
     ellipsis: true,
-    colKey: 'productName',
-    title: '客户名称',
+    colKey: "productName",
+    title: "客户名称",
     width: 150,
   },
   {
-    align: 'center',
-    colKey: 'growUp',
+    align: "center",
+    colKey: "growUp",
     width: 70,
-    title: '较上周',
+    title: "较上周",
   },
   {
-    align: 'center',
-    colKey: 'count',
-    title: '订单量',
+    align: "center",
+    colKey: "count",
+    title: "订单量",
     width: 70,
   },
   {
-    align: 'center',
-    colKey: 'operation',
-    title: '操作',
+    align: "center",
+    colKey: "operation",
+    title: "操作",
     width: 70,
-    fixed: 'right',
+    fixed: "right",
   },
 ];
 
-const BUY_COLUMNS: TdBaseTableProps['columns'] = [
+const BUY_COLUMNS: TdBaseTableProps["columns"] = [
   {
-    align: 'center',
-    colKey: 'index',
-    title: '排名',
+    align: "center",
+    colKey: "index",
+    title: "排名",
     width: 70,
-    fixed: 'left',
+    fixed: "left",
   },
   {
-    align: 'left',
+    align: "left",
     ellipsis: true,
-    colKey: 'productName',
+    colKey: "productName",
     width: 150,
-    title: '客户名称',
+    title: "客户名称",
   },
   {
-    align: 'center',
-    colKey: 'growUp',
+    align: "center",
+    colKey: "growUp",
     width: 70,
-    title: '较上周',
+    title: "较上周",
   },
   {
-    align: 'center',
-    colKey: 'count',
-    title: '订单量',
+    align: "center",
+    colKey: "count",
+    title: "订单量",
     width: 70,
   },
   {
-    align: 'center',
-    colKey: 'operation',
-    title: '操作',
+    align: "center",
+    colKey: "operation",
+    title: "操作",
     width: 70,
-    fixed: 'right',
+    fixed: "right",
   },
 ];
 
@@ -134,7 +160,7 @@ const rehandleClickOp = (val: MouseEvent) => {
   console.log(val);
 };
 const getRankClass = (index: number) => {
-  return ['dashboard-rank', { 'dashboard-rank__top': index < 3 }];
+  return ["dashboard-rank", { "dashboard-rank__top": index < 3 }];
 };
 </script>
 

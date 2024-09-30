@@ -1,7 +1,12 @@
 <template>
   <t-row :gutter="16" class="row-container">
     <t-col :xs="12" :xl="9">
-      <t-card title="统计数据" :subtitle="currentMonth" class="dashboard-chart-card" :bordered="false">
+      <t-card
+        title="统计数据"
+        :subtitle="currentMonth"
+        class="dashboard-chart-card"
+        :bordered="false"
+      >
         <template #actions>
           <div class="dashboard-chart-title-container">
             <t-date-range-picker
@@ -21,11 +26,20 @@
       </t-card>
     </t-col>
     <t-col :xs="12" :xl="3">
-      <t-card title="销售渠道" :subtitle="currentMonth" class="dashboard-chart-card" :bordered="false">
+      <t-card
+        title="销售渠道"
+        :subtitle="currentMonth"
+        class="dashboard-chart-card"
+        :bordered="false"
+      >
         <div
           id="countContainer"
           class="dashboard-chart-container"
-          :style="{ width: `${resizeTime * 326}px`, height: `${resizeTime * 326}px`, margin: '0 auto' }"
+          :style="{
+            width: `${resizeTime * 326}px`,
+            height: `${resizeTime * 326}px`,
+            margin: '0 auto',
+          }"
         />
       </t-card>
     </t-col>
@@ -33,20 +47,31 @@
 </template>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core';
-import { LineChart, PieChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { computed, nextTick, onDeactivated, onMounted, ref, watch } from 'vue';
+import { useWindowSize } from "@vueuse/core";
+import { LineChart, PieChart } from "echarts/charts";
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from "echarts/components";
+import * as echarts from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { computed, nextTick, onDeactivated, onMounted, ref, watch } from "vue";
 
-import { useSettingStore } from '@/store';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
+import { useSettingStore } from "@/store";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
 
-import { getLineChartDataSet, getPieChartDataSet } from '../index';
+import { getLineChartDataSet, getPieChartDataSet } from "../index";
 
-echarts.use([TooltipComponent, LegendComponent, PieChart, GridComponent, LineChart, CanvasRenderer]);
+echarts.use([
+  TooltipComponent,
+  LegendComponent,
+  PieChart,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+]);
 
 const getThisMonth = (checkedValues?: string[]) => {
   let date: Date;
@@ -57,8 +82,12 @@ const getThisMonth = (checkedValues?: string[]) => {
   date = new Date(checkedValues[0]);
   const date2 = new Date(checkedValues[1]);
 
-  const startMonth = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-  const endMonth = date2.getMonth() + 1 > 9 ? date2.getMonth() + 1 : `0${date2.getMonth() + 1}`;
+  const startMonth =
+    date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+  const endMonth =
+    date2.getMonth() + 1 > 9
+      ? date2.getMonth() + 1
+      : `0${date2.getMonth() + 1}`;
   return `${date.getFullYear()}-${startMonth}  至  ${date2.getFullYear()}-${endMonth}`;
 };
 
@@ -72,7 +101,7 @@ let monitorContainer: HTMLElement;
 let monitorChart: echarts.ECharts;
 const renderMonitorChart = () => {
   if (!monitorContainer) {
-    monitorContainer = document.getElementById('monitorContainer');
+    monitorContainer = document.getElementById("monitorContainer");
   }
   monitorChart = echarts.init(monitorContainer);
   monitorChart.setOption(getLineChartDataSet({ ...chartColors.value }));
@@ -83,26 +112,26 @@ let countContainer: HTMLElement;
 let countChart: echarts.ECharts;
 const renderCountChart = () => {
   if (!countContainer) {
-    countContainer = document.getElementById('countContainer');
+    countContainer = document.getElementById("countContainer");
   }
   countChart = echarts.init(countContainer);
   countChart.setOption(getPieChartDataSet(chartColors.value));
 
   // 取消之前高亮的图形
   countChart.dispatchAction({
-    type: 'downplay',
+    type: "downplay",
     seriesIndex: 0,
     dataIndex: -1,
   });
   // 高亮当前图形
   countChart.dispatchAction({
-    type: 'highlight',
+    type: "highlight",
     seriesIndex: 0,
     dataIndex: 1,
   });
   // 显示 tooltip
   countChart.dispatchAction({
-    type: 'showTip',
+    type: "showTip",
     seriesIndex: 0,
     dataIndex: 1,
   });
@@ -115,10 +144,17 @@ const renderCharts = () => {
 
 // chartSize update
 const updateContainer = () => {
-  if (document.documentElement.clientWidth >= 1400 && document.documentElement.clientWidth < 1920) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 2080).toFixed(2));
+  if (
+    document.documentElement.clientWidth >= 1400 &&
+    document.documentElement.clientWidth < 1920
+  ) {
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 2080).toFixed(2),
+    );
   } else if (document.documentElement.clientWidth < 1080) {
-    resizeTime.value = Number((document.documentElement.clientWidth / 1080).toFixed(2));
+    resizeTime.value = Number(
+      (document.documentElement.clientWidth / 1080).toFixed(2),
+    );
   } else {
     resizeTime.value = 1;
   }
@@ -188,7 +224,9 @@ const storeModeWatch = watch(
 
 const onCurrencyChange = (checkedValues: string[]) => {
   currentMonth.value = getThisMonth(checkedValues);
-  monitorChart.setOption(getLineChartDataSet({ dateTime: checkedValues, ...chartColors.value }));
+  monitorChart.setOption(
+    getLineChartDataSet({ dateTime: checkedValues, ...chartColors.value }),
+  );
 };
 </script>
 
