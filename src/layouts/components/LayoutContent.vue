@@ -21,13 +21,13 @@
         <template #label>
           <t-dropdown
             trigger="context-menu"
-            :min-column-width="128"
+            :min-column-width="110"
             :popup-props="{
               overlayClassName: 'route-tabs-dropdown',
-              onVisibleChange: (
-                visible: boolean,
-                ctx: PopupVisibleChangeContext,
-              ) => handleTabMenuClick(visible, ctx, routeItem.path),
+              // onVisibleChange: (
+              //   visible: boolean,
+              //   ctx: PopupVisibleChangeContext,
+              // ) => handleTabMenuClick(visible, ctx, routeItem.path),
               // visible: activeTabPath === routeItem.path,
             }"
           >
