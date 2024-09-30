@@ -195,7 +195,7 @@ const handleCloseDrawer = () => {
 const getThumbnailUrl = (name: string): string => {
   // return `https://tdesign.gtimg.com/tdesign-pro/setting/${name}.png`;
   // console.log((await import(`@/assets/${name}.png`)).default);
-  return `/${name}.png`;
+  return `${import.meta.env.VITE_BASE_URL}${name}.png`;
   // if (name == "side")
   //   return sidePng;
   // if (name == "top")
