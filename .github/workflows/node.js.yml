@@ -28,7 +28,7 @@ jobs:
         cache: 'pnpm'
     - run: pnpm install
     - run: pnpm build:github
-    - run: copy dist/index.html dist/404.html
+    - run: cp dist/index.html dist/404.html
 
     - name: Deploy 
       uses: JamesIves/github-pages-deploy-action@v4
