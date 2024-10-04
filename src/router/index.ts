@@ -47,7 +47,6 @@ export const allRoutes = [...menuList, ...defaultRouterList];
 export const getActive = (maxLevel = 3): string => {
   // 非组件内调用必须通过Router实例获取当前路由
   const route = router.currentRoute.value;
-
   if (!route.path) {
     return "";
   }
@@ -71,5 +70,4 @@ const router = createRouter({
     };
   },
 });
-
 export default router;
