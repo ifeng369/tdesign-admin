@@ -21,7 +21,9 @@
             variant="text"
             @click="changeCollapsed"
           >
-            <t-icon class="collapsed-icon" name="view-list" />
+            <!-- <t-icon class="collapsed-icon" name="view-list" /> -->
+            <collapsedIco v-if="settingStore.isSidebarCompact" style="height: 20px;"></collapsedIco>
+            <expandedIco v-else style="height: 20px;"></expandedIco>
           </t-button>
           <search :layout="layout" />
         </div>
@@ -99,6 +101,9 @@ import {
   SettingIcon,
   UserCircleIcon,
 } from "tdesign-icons-vue-next";
+import collapsedIco from "@/assets/collapsed.svg?component";
+import expandedIco from "@/assets/expanded.svg?component";
+
 import type { PropType } from "vue";
 import { computed } from "vue";
 import { useRouter } from "vue-router";

@@ -60,7 +60,8 @@ export const getActive = (maxLevel = 3): string => {
 };
 
 const router = createRouter({
-  history: env === "github"? createWebHashHistory() : createWebHistory(import.meta.env.VITE_BASE_URL),
+  // history: env === "github"? createWebHashHistory() : createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: allRoutes,
   scrollBehavior() {
     return {
