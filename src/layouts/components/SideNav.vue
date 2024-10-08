@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { difference, remove, union } from "lodash";
+import { difference, remove, union } from "lodash-es"
 import { MenuValue } from "tdesign-vue-next";
 import type { PropType } from "vue";
 import { computed, onMounted, ref, watch } from "vue";

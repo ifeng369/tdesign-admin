@@ -10,8 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import isBoolean from "lodash/isBoolean";
-import isUndefined from "lodash/isUndefined";
+import { isBoolean,isUndefined } from "lodash-es"
 import type { ComputedRef } from "vue";
 import { computed } from "vue";
 

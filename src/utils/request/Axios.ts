@@ -6,10 +6,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import cloneDeep from "lodash/cloneDeep";
-import debounce from "lodash/debounce";
-import isFunction from "lodash/isFunction";
-import throttle from "lodash/throttle";
+import { cloneDeep, debounce,isFunction,throttle} from "lodash-es";
 import { stringify } from "qs";
 
 import { ContentTypeEnum } from "@/constants";

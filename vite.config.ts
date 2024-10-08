@@ -50,7 +50,14 @@ export default ({ mode }: ConfigEnv): UserConfig =>{
     build: {
       // outDir: '../wwwroot',
       sourcemap: true,
-      emptyOutDir: true
+      emptyOutDir: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            echarts: ['echarts']
+          }
+        },
+      },
     },
     resolve:{
       alias: {
