@@ -1,5 +1,4 @@
 import Layout from "@/layouts/index.vue";
-import Page from "./index.vue";
 import { ViewListIcon } from "tdesign-icons-vue-next";
 
 import ListBasePage from "./base/index.vue";
@@ -7,6 +6,9 @@ import ListCardPage from "./card/index.vue";
 import ListFilterPage from "./filter/index.vue";
 import ListTreePage from "./tree/index.vue";
 import { RouteRecordRaw } from "vue-router";
+
+import { shallowRef } from "vue";
+
 
 
 const router: RouteRecordRaw = {

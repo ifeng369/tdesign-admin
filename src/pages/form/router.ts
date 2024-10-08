@@ -2,6 +2,7 @@ import Layout from "@/layouts/index.vue";
 import { Edit1Icon } from "tdesign-icons-vue-next";
 import { RouteRecordRaw } from "vue-router";
 
+import { shallowRef } from "vue";
 
 import FormBasePage from "./base/index.vue";
 import FormStepPage from "./step/index.vue";
