@@ -17,13 +17,13 @@ import { useRoute } from "vue-router";
 
 import { useSettingStore } from "@/store";
 import type { MenuRoute } from "@/types/interface";
-import menuList from "@/router/menu";
+import {pageRouterList} from "@/router";
 
 import LSideNav from "./SideNav.vue";
 
 const route = useRoute();
 const settingStore = useSettingStore();
-const menuRouters = ref(menuList);
+const menuRouters = ref(pageRouterList);
 
 const sideMenu = computed(() => {
   const { layout, splitMenu } = settingStore;

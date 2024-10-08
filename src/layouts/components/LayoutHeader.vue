@@ -13,12 +13,11 @@
 import { computed, ref } from "vue";
 
 import { useSettingStore } from "@/store";
-import menuList from "@/router/menu";
-
+import {pageRouterList} from "@/router";
 import LHeader from "./Header.vue";
 import type { MenuRoute } from "@/types/interface";
 
-const menuRouters = ref(menuList);
+const menuRouters = ref(pageRouterList);
 const settingStore = useSettingStore();
 const headerMenu = computed(() => {
   let newMenuRouters = menuRouters.value as Array<MenuRoute>;
