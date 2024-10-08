@@ -17,9 +17,6 @@ export default ({ mode }: ConfigEnv): UserConfig =>{
       vue(),
       AutoImport({
         imports: ['vue', 'vue-router','pinia'],
-        // resolvers: [TDesignResolver({
-        //   library: 'vue-next'
-        // })],
       }),
       Components({
         resolvers: [TDesignResolver({
